@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Tatev Mikaelyan Hair Studio</title>
+<meta name="description" content="Tatev Mikaelyan Hair Studio — Պուշկին 19, Երևան">
+<meta property="og:title" content="Tatev Mikaelyan Hair Studio">
+<meta property="og:image" content="media/after.webp">
+<meta name="theme-color" content="#120B08">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@200..500&family=Noto+Sans+Armenian:wght@200..500&display=swap">
+<style>
+:root { --bg: #120B08; --ink: #F6ECE4; --soft: rgba(246,236,228,.68); --line: rgba(246,236,228,.16); --accent: #F1C08F; --accent-ink: #2A170D;
+  --font: "Jost", "Noto Sans Armenian", system-ui, sans-serif; --pad: clamp(18px, 4.5vw, 64px); --ease: cubic-bezier(.2,.7,.1,1); }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-weight: 300; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+a { color: inherit; }
+svg.i { width: 1.1em; height: 1.1em; fill: currentColor; flex: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* the living hair runs behind the whole page */
+#silk { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; touch-action: pan-y; transition: opacity .6s; }
+main, .top { position: relative; z-index: 1; }
+.top { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; align-items: center; gap: 12px; padding: 16px var(--pad); transition: background-color .4s; }
+.top.solid { background: rgba(18,11,8,.82); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.brand { font-weight: 500; font-size: .8rem; letter-spacing: .3em; text-transform: uppercase; margin-right: auto; text-decoration: none; white-space: nowrap; }
+.langs button { font: inherit; font-size: .85rem; background: none; border: 0; color: inherit; opacity: .5; cursor: pointer; padding: 8px 6px; }
+.langs button[aria-pressed="true"] { opacity: 1; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .55em; min-height: 54px; padding: .85em 1.6em; border-radius: 999px; font-weight: 500; font-size: 1rem; text-decoration: none; transition: transform .25s var(--ease); }
+.btn:hover { transform: translateY(-2px); }
+.btn-a { background: var(--accent); color: var(--accent-ink); }
+.btn-o { border: 1px solid rgba(246,236,228,.38); background: rgba(246,236,228,.06); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+/* ---------- 1. hero over the hair ---------- */
+.hero { height: 100svh; min-height: 600px; position: relative; pointer-events: none; }
+.hero .fade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(18,11,8,.92) 0%, rgba(18,11,8,.55) 34%, rgba(18,11,8,0) 60%); }
+.copy { position: absolute; left: var(--pad); bottom: clamp(28px, 7vh, 72px); max-width: 560px; pointer-events: auto; }
+.k { margin: 0 0 10px; color: var(--soft); font-size: .95rem; letter-spacing: .04em; }
+h1 { margin: 0; font-weight: 200; line-height: .84; letter-spacing: -.02em; }
+h1 .a { display: block; font-size: clamp(5rem, 14vw, 13.5rem); text-transform: uppercase; }
+h1 .a .ch { display: inline-block; animation: up 1.2s var(--ease) both; }
+@keyframes up { from { transform: translateY(.3em); opacity: 0; } }
+h1 .b { display: block; font-size: clamp(1.5rem, 3vw, 2.6rem); font-weight: 300; margin-top: .3em; }
+.tag { margin: 16px 0 22px; color: var(--soft); font-size: clamp(1rem, 1.4vw, 1.2rem); line-height: 1.45; max-width: 32ch; }
+.sw { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+.sw > span { font-size: .92rem; margin-right: 2px; }
+.sw button { width: 40px; height: 40px; border-radius: 50%; border: 0; cursor: pointer; background: var(--c); position: relative; padding: 0; }
+.sw button::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1.5px solid var(--ink); opacity: 0; transition: opacity .3s; }
+.sw button[aria-pressed="true"]::after { opacity: 1; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.hint { position: absolute; right: var(--pad); bottom: clamp(28px, 7vh, 72px); font-size: .82rem; color: var(--soft); letter-spacing: .06em; display: flex; align-items: center; gap: 10px; }
+.hint i { width: 34px; height: 1px; background: currentColor; animation: hint 2.4s ease-in-out infinite; transform-origin: left; }
+@keyframes hint { 0%, 100% { transform: scaleX(.2); } 50% { transform: scaleX(1); } }
+
+/* ---------- 2. transformation, scrubbed by scroll ---------- */
+.trans { height: 520vh; position: relative; }
+.stage { position: sticky; top: 0; height: 100svh; overflow: hidden; background: var(--bg); }
+#tv { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.stage .shade { position: absolute; inset: 0; background: linear-gradient(180deg, var(--bg) 0%, rgba(18,11,8,0) 16%, rgba(18,11,8,0) 62%, rgba(18,11,8,.9) 100%); }
+.state { position: absolute; left: var(--pad); bottom: 96px; font-weight: 200; font-size: clamp(3.4rem, 11vw, 10.5rem); line-height: .8; letter-spacing: -.03em; text-transform: uppercase; }
+.state span { display: block; }
+.state .after { position: absolute; left: 0; bottom: 0; }
+.credit { position: absolute; right: var(--pad); top: 50%; transform: translateY(-50%); text-align: right; max-width: 420px; opacity: 0; }
+.credit .ck { margin: 0 0 10px; font-size: .9rem; color: var(--soft); letter-spacing: .06em; }
+.credit h2 { margin: 0; font-weight: 200; font-size: clamp(2rem, 4.2vw, 4rem); line-height: .95; letter-spacing: -.02em; }
+.credit h2 b { font-weight: 400; color: var(--accent); }
+.credit p.s { margin: 12px 0 0; color: var(--soft); font-size: 1.02rem; line-height: 1.45; }
+.meter { position: absolute; left: var(--pad); right: var(--pad); bottom: 34px; display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; font-size: .85rem; letter-spacing: .06em; }
+.track { position: relative; height: 2px; background: rgba(246,236,228,.22); border-radius: 2px; }
+.track i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 2px; background: linear-gradient(90deg, #5B4334, var(--accent)); }
+.track b { position: absolute; top: 50%; left: 0; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 6px rgba(241,192,143,.22); }
+
+/* ---------- 3. prices ---------- */
+.prices { padding: clamp(90px, 13vw, 170px) var(--pad); background: linear-gradient(180deg, var(--bg) 0%, rgba(18,11,8,.72) 18%, rgba(18,11,8,.72) 82%, var(--bg) 100%); }
+.prices-in { max-width: 980px; margin: 0 auto; }
+.prices h2 { margin: 0 0 10px; font-weight: 200; font-size: clamp(2.6rem, 7vw, 6rem); line-height: .92; letter-spacing: -.02em; }
+.p-sub { margin: 0 0 30px; color: var(--soft); }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.tabs button { font: inherit; font-size: .98rem; font-weight: 400; color: inherit; background: rgba(18,11,8,.4); border: 1px solid var(--line); border-radius: 999px; padding: 10px 18px; cursor: pointer; transition: background-color .3s, color .3s; }
+.tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.list { list-style: none; margin: 0; padding: 0; min-height: 300px; }
+.item { display: grid; grid-template-columns: 1fr auto; gap: 4px 20px; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.item h3 { margin: 0; font-weight: 200; font-size: clamp(1.5rem, 3vw, 2.4rem); line-height: 1.1; }
+.item .pr { font-weight: 400; font-size: clamp(1.05rem, 1.7vw, 1.35rem); white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--accent); }
+.item p { grid-column: 1 / -1; margin: 0; color: var(--soft); font-size: .95rem; }
+.item.in { animation: rowin .7s var(--ease) both; }
+@keyframes rowin { from { opacity: 0; transform: translateY(16px); } }
+.p-note { margin: 22px 0 0; color: var(--soft); font-size: .88rem; }
+
+/* ---------- 4. visit ---------- */
+.visit { padding: clamp(80px, 11vw, 150px) var(--pad) 36px; background: linear-gradient(180deg, rgba(18,11,8,0), rgba(18,11,8,.9) 30%, var(--bg)); }
+.visit-in { max-width: 1240px; margin: 0 auto; display: grid; gap: clamp(36px, 6vw, 80px); }
+@media (min-width: 960px) { .visit-in { grid-template-columns: 1.1fr .9fr; align-items: end; } }
+.score { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin: 0; }
+.score b { font-weight: 200; font-size: clamp(6rem, 15vw, 13rem); line-height: .8; letter-spacing: -.04em; }
+.score span { color: var(--soft); max-width: 16ch; line-height: 1.35; font-weight: 300; font-size: 1.1rem; }
+.quote { margin: 26px 0 0; font-size: clamp(1.4rem, 2.6vw, 2.2rem); font-weight: 200; line-height: 1.2; }
+.quote::before { content: "«"; color: var(--accent); } .quote::after { content: "»"; color: var(--accent); }
+.facts { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); margin-bottom: 30px; }
+.facts h3 { margin: 0 0 6px; font-size: .85rem; font-weight: 400; color: var(--soft); }
+.facts p, .facts a { margin: 0; font-size: 1.15rem; text-decoration: none; line-height: 1.35; }
+.facts a.u { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--line); }
+.foot { max-width: 1240px; margin: clamp(50px, 8vw, 90px) auto 0; padding-top: 20px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-size: .85rem; color: var(--soft); }
+.demo { position: fixed; z-index: 30; left: 50%; top: 58px; transform: translateX(-50%); background: rgba(0,0,0,.55); color: #fff; font-family: "Noto Sans Armenian", system-ui, sans-serif; font-size: .64rem; padding: 5px 11px; border-radius: 999px; white-space: nowrap; pointer-events: none; }
+
+@media (max-width: 820px) {
+  .hero .fade { background: linear-gradient(0deg, rgba(18,11,8,.95) 0%, rgba(18,11,8,.75) 44%, rgba(18,11,8,0) 72%); }
+  .hint { top: 92px; bottom: auto; }
+  h1 .a { font-size: clamp(4rem, 21vw, 7rem); }
+  .cta .btn { flex: 1; }
+  .credit { left: var(--pad); right: var(--pad); top: 88px; transform: none; text-align: left; max-width: none; }
+  .state { bottom: 92px; font-size: clamp(3rem, 16vw, 5.5rem); }
+  .stage .shade { background: none; }
+  /* phones: a wide centre crop sits mid-screen and melts into the dark backdrop, so the hair stays in frame */
+  #tv { top: 46%; bottom: auto; height: auto; aspect-ratio: 850 / 900; transform: translateY(-50%);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 80%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 80%, transparent 100%); }
+}
+@media (prefers-reduced-motion: reduce) { h1 .a .ch, .item.in { animation: none; } .hint i { animation: none; } }
+</style>
+</head>
+<body>
+<canvas id="silk" aria-hidden="true"></canvas>
+<header class="top" id="top">
+  <a class="brand" href="#">Tatev Mikaelyan</a>
+  <span class="langs" role="group" aria-label="Language"><button data-lang="hy" aria-pressed="true">Հայ</button><button data-lang="ru" aria-pressed="false">Рус</button><button data-lang="en" aria-pressed="false">Eng</button></span>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="nm">
+    <div class="fade"></div>
+    <div class="copy">
+      <p class="k" data-t="k"></p>
+      <h1 id="nm" aria-label="Tatev Mikaelyan hair studio"><span class="a" aria-hidden="true" id="nmA">Tatev</span><span class="b" aria-hidden="true">Mikaelyan hair studio</span></h1>
+      <p class="tag" data-t="tag"></p>
+      <div class="sw" id="sw"><span data-t="try"></span>
+        <button data-p="chestnut" style="--c:#7A4529" aria-pressed="true"></button>
+        <button data-p="caramel" style="--c:#C98B52" aria-pressed="false"></button>
+        <button data-p="copper" style="--c:#C25A2C" aria-pressed="false"></button>
+        <button data-p="blonde" style="--c:#DCC39C" aria-pressed="false"></button>
+        <button data-p="black" style="--c:#222A2E" aria-pressed="false"></button>
+      </div>
+      <div class="cta"><a class="btn btn-a" href="tel:+37499550103"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-phone"/></svg><span data-t="book"></span></a><a class="btn btn-o" href="https://wa.me/message/SS3H42SUWRXWJ1" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-chat"/></svg>WhatsApp</a></div>
+    </div>
+    <div class="hint" aria-hidden="true"><i></i><span data-t="hint"></span></div>
+  </section>
+
+  <section class="trans" id="trans" aria-label="Before and after">
+    <div class="stage">
+      <video id="tv" muted playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+      <div class="shade"></div>
+      <div class="state" aria-hidden="true"><span class="before" id="sB" data-t="before"></span><span class="after" id="sA" data-t="after"></span></div>
+      <div class="credit" data-from=".05" data-to=".36"><p class="ck" data-t="c1k"></p><h2 data-h="c1"></h2><p class="s" data-t="c1s"></p></div>
+      <div class="credit" data-from=".42" data-to=".7"><p class="ck" data-t="c2k"></p><h2 data-h="c2"></h2><p class="s" data-t="c2s"></p></div>
+      <div class="credit" data-from=".76" data-to="1.2"><p class="ck" data-t="c3k"></p><h2><b>4.9</b></h2><p class="s" data-t="c3s"></p></div>
+      <div class="meter"><span data-t="before"></span><div class="track"><i id="mi"></i><b id="mb"></b></div><span data-t="after"></span></div>
+    </div>
+  </section>
+
+  <section class="prices" aria-labelledby="pH">
+    <div class="prices-in">
+      <h2 id="pH" data-t="p_title"></h2>
+      <p class="p-sub" data-t="p_sub"></p>
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <ul class="list" id="list" role="tabpanel"></ul>
+      <p class="p-note" data-t="p_note"></p>
+    </div>
+  </section>
+
+  <section class="visit" aria-labelledby="vH">
+    <div class="visit-in">
+      <div>
+        <h2 class="score" id="vH"><b>4.9</b><span data-t="score"></span></h2>
+        <p class="quote">Осталась в полном восторге!</p>
+      </div>
+      <div>
+        <div class="facts">
+          <div><h3 data-t="l_addr"></h3><p data-t="addr"></p><a class="u" href="https://www.google.com/maps/place/data=!4m2!3m1!1s0x406abd36eee3c873:0x8fc65800e50b3f00" target="_blank" rel="noopener" data-t="map"></a></div>
+          <div><h3 data-t="l_hours"></h3><p data-t="hours"></p></div>
+          <div><h3 data-t="l_phone"></h3><a href="tel:+37499550103">099 55 01 03</a></div>
+          <div><h3>Instagram</h3><a class="u" href="https://www.instagram.com/tatevmikaelyanhairstudio" target="_blank" rel="noopener">@tatevmikaelyanhairstudio</a></div>
+        </div>
+        <div class="cta"><a class="btn btn-a" href="tel:+37499550103"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-phone"/></svg><span data-t="book"></span></a><a class="btn btn-o" href="https://wa.me/message/SS3H42SUWRXWJ1" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-chat"/></svg>WhatsApp</a></div>
+      </div>
+    </div>
+    <div class="foot"><span>© Tatev Mikaelyan Hair Studio</span><span data-t="city"></span></div>
+  </section>
+</main>
+<div class="demo" data-t="demo"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ic-phone" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></symbol>
+  <symbol id="ic-chat" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3zm0 16.2a7.2 7.2 0 0 1-3.7-1l-.3-.2-2.7.7.7-2.6-.2-.3A7.2 7.2 0 1 1 12 19.2zm4-5.4c-.2-.1-1.3-.6-1.5-.7s-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a5.9 5.9 0 0 1-2.9-2.5c-.2-.4.2-.4.6-1.2a.4.4 0 0 0 0-.4l-.7-1.6c-.2-.4-.4-.4-.5-.4h-.4a.8.8 0 0 0-.6.3 2.5 2.5 0 0 0-.8 1.9 4.4 4.4 0 0 0 .9 2.3 10 10 0 0 0 3.9 3.4c1.4.6 2 .7 2.7.6a2.3 2.3 0 0 0 1.5-1.1 1.9 1.9 0 0 0 .1-1.1c0-.1-.2-.2-.4-.3z"/></symbol>
+</svg>
+
+<script>
+(function () {
+  "use strict";
+  /* ---------- texts ---------- */
+  var T = {
+    k: { hy: "Մազերի ստուդիա · Պուշկին 19, Երևան", ru: "Студия волос · Пушкина 19, Ереван", en: "Hair studio · 19 Pushkin St, Yerevan" },
+    tag: { hy: "Ներկում, բալայաժ և հարդարում Երևանի կենտրոնում։", ru: "Окрашивание, балаяж и укладки в центре Еревана.", en: "Colour, balayage and styling in central Yerevan." },
+    try: { hy: "Գույնը՝", ru: "Цвет:", en: "Shade:" },
+    book: { hy: "Գրանցվել", ru: "Записаться", en: "Book a visit" },
+    hint: { hy: "Սահեցրեք մատը մազերի վրայով", ru: "Проведите по волосам", en: "Run your finger through the hair" },
+    before: { hy: "Նախքան", ru: "До", en: "Before" }, after: { hy: "Հետո", ru: "После", en: "After" },
+    c1k: { hy: "Մեկ այց", ru: "Один визит", en: "One visit" },
+    c1: { hy: "Ձեր մազերը՝<br><b>նոր կյանքով</b>", ru: "Ваши волосы —<br><b>с новой жизнью</b>", en: "Your hair,<br><b>brought back to life</b>" },
+    c1s: { hy: "Ոլորեք և տեսեք փոխակերպումը։", ru: "Листайте и смотрите, как меняется цвет.", en: "Scroll and watch the change." },
+    c2k: { hy: "Մեր մասնագիտությունը", ru: "Наша специализация", en: "What we do best" },
+    c2: { hy: "Բալայաժ<br><b>և ներկում</b>", ru: "Балаяж<br><b>и окрашивание</b>", en: "Balayage<br><b>& colour</b>" },
+    c2s: { hy: "Ձեռքով նկարված բնական անցումներ, փայլ և առողջ մազեր։", ru: "Мягкие переходы вручную, блеск и здоровые волосы.", en: "Hand-painted transitions, shine and healthy hair." },
+    c3k: { hy: "Google-ում", ru: "В Google", en: "On Google" },
+    c3s: { hy: "443 գոհ հաճախորդի կարծիք", ru: "443 отзыва довольных клиенток", en: "443 reviews from happy clients" },
+    p_title: { hy: "Ծառայություններ և գներ", ru: "Услуги и цены", en: "Services and prices" },
+    p_sub: { hy: "Ընտրեք բաժինը", ru: "Выберите раздел", en: "Choose a category" },
+    p_note: { hy: "Գինը կախված է մազերի երկարությունից։ Ճշգրիտ գինը կասենք խորհրդատվության ժամանակ։", ru: "Цена зависит от длины волос. Точную цену назовём на консультации.", en: "Prices depend on hair length. We confirm the exact price at your consultation." },
+    score: { hy: "443 կարծիք Google-ում", ru: "443 отзыва в Google", en: "443 reviews on Google" },
+    l_addr: { hy: "Հասցե", ru: "Адрес", en: "Address" }, l_hours: { hy: "Ժամեր", ru: "Часы работы", en: "Hours" }, l_phone: { hy: "Հեռախոս", ru: "Телефон", en: "Phone" },
+    addr: { hy: "Պուշկինի փ. 19, Երևան", ru: "ул. Пушкина, 19, Ереван", en: "19 Pushkin St, Yerevan" },
+    map: { hy: "Բացել քարտեզում", ru: "Открыть в картах", en: "Open in Maps" },
+    hours: { hy: "Ամեն օր 8:00–19:00", ru: "Ежедневно 8:00–19:00", en: "Every day 8:00–19:00" },
+    city: { hy: "Երևան, Հայաստան", ru: "Ереван, Армения", en: "Yerevan, Armenia" },
+    demo: { hy: "Դեմո՝ Tatev Mikaelyan-ի համար · գները օրինակ են", ru: "Демо для Tatev Mikaelyan · цены — пример", en: "Demo for Tatev Mikaelyan · sample prices" }
+  };
+  var SHADE = { chestnut: { hy: "Շագանակագույն", ru: "Каштан", en: "Chestnut" }, caramel: { hy: "Կարամել", ru: "Карамель", en: "Caramel" }, copper: { hy: "Պղնձագույն", ru: "Медь", en: "Copper" }, blonde: { hy: "Շիկահեր", ru: "Блонд", en: "Blonde" }, black: { hy: "Սև", ru: "Чёрный", en: "Black" } };
+  var CATS = [
+    { t: { hy: "Ներկում", ru: "Окрашивание", en: "Colour" }, items: [
+      [{ hy: "Բալայաժ", ru: "Балаяж", en: "Balayage" }, 35000, { hy: "Ձեռքով նկարված բնական անցումներ", ru: "Мягкие переходы, ручная техника", en: "Soft, hand-painted transitions" }],
+      [{ hy: "Միագույն ներկում", ru: "Однотонное окрашивание", en: "Single colour" }, 15000],
+      [{ hy: "Մելիրում", ru: "Мелирование", en: "Highlights" }, 25000],
+      [{ hy: "Տոնավորում", ru: "Тонирование", en: "Toning" }, 12000, { hy: "Փայլ և երանգի թարմացում", ru: "Блеск и обновление оттенка", en: "Gloss and shade refresh" }]
+    ] },
+    { t: { hy: "Սանրվածք", ru: "Стрижка и укладка", en: "Cut & style" }, items: [
+      [{ hy: "Կանացի սանրվածք", ru: "Женская стрижка", en: "Women's haircut" }, 6000],
+      [{ hy: "Հարդարում", ru: "Укладка", en: "Blow-dry & styling" }, 5000],
+      [{ hy: "Երեկոյան սանրվածք", ru: "Вечерняя причёска", en: "Evening hair" }, 12000]
+    ] },
+    { t: { hy: "Խնամք", ru: "Уход", en: "Care" }, items: [
+      [{ hy: "Կերատինային խնամք", ru: "Кератин", en: "Keratin treatment" }, 30000],
+      [{ hy: "Բոտոքս մազերի համար", ru: "Ботокс для волос", en: "Hair botox" }, 25000],
+      [{ hy: "Խորը խոնավեցում", ru: "Глубокое увлажнение", en: "Deep conditioning" }, 8000]
+    ] },
+    { t: { hy: "Հարսանյաց", ru: "Свадьба", en: "Bridal" }, items: [
+      [{ hy: "Հարսի սանրվածք", ru: "Свадебная причёска", en: "Bridal hair" }, 30000],
+      [{ hy: "Փորձնական սանրվածք", ru: "Пробная причёска", en: "Trial session" }, 15000]
+    ] }
+  ];
+  var lang = "hy", cat = 0, reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function price(n) { var s = String(n).replace(/\B(?=(\d{3})+(?!\d))/g, lang === "en" ? "," : " ") + " ֏"; return lang === "hy" ? s + "-ից" : lang === "ru" ? "от " + s : "from " + s; }
+  function renderList(anim) {
+    document.getElementById("list").innerHTML = CATS[cat].items.map(function (it, i) {
+      return '<li class="item' + (anim ? " in" : "") + '" style="animation-delay:' + i * 70 + 'ms"><h3>' + esc(it[0][lang]) + '</h3><span class="pr">' + price(it[1]) + "</span>" + (it[2] ? "<p>" + esc(it[2][lang]) + "</p>" : "") + "</li>";
+    }).join("");
+  }
+  function renderTabs() {
+    document.getElementById("tabs").innerHTML = CATS.map(function (c, i) { return '<button role="tab" aria-selected="' + (i === cat) + '" data-i="' + i + '">' + esc(c.t[lang]) + "</button>"; }).join("");
+  }
+  document.getElementById("tabs").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; cat = +b.dataset.i; renderTabs(); renderList(!reduce); });
+  function setLang(l) {
+    lang = ["hy", "ru", "en"].indexOf(l) >= 0 ? l : "hy";
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-t]").forEach(function (e) { e.textContent = T[e.dataset.t][lang]; });
+    document.querySelectorAll("[data-h]").forEach(function (e) { e.innerHTML = T[e.dataset.h][lang]; });
+    document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === lang)); });
+    document.querySelectorAll("#sw button").forEach(function (b) { b.setAttribute("aria-label", SHADE[b.dataset.p][lang]); });
+    renderTabs(); renderList(false);
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+  }
+  document.querySelectorAll("[data-lang]").forEach(function (b) { b.addEventListener("click", function () { setLang(b.dataset.lang); }); });
+  var a = document.getElementById("nmA");
+  a.innerHTML = Array.from(a.textContent).map(function (c, i) { return '<span class="ch" style="animation-delay:' + (100 + i * 80) + 'ms">' + c + "</span>"; }).join("");
+
+  /* ---------- living hair (canvas, fixed behind the page) ---------- */
+  var Pm = new Uint8Array(512); for (var i = 0; i < 256; i++) Pm[i] = i;
+  for (i = 255; i > 0; i--) { var r = (Math.random() * (i + 1)) | 0, tt = Pm[i]; Pm[i] = Pm[r]; Pm[r] = tt; } for (i = 0; i < 256; i++) Pm[i + 256] = Pm[i];
+  function fd(t) { return t * t * (3 - 2 * t); }
+  function hh(x, y, z) { return Pm[Pm[Pm[x & 255] + (y & 255)] + (z & 255)] / 255; }
+  function noise(x, y, z) { var X = Math.floor(x), Y = Math.floor(y), Z = Math.floor(z), u = fd(x - X), v = fd(y - Y), w = fd(z - Z); function l(p, q, t) { return p + (q - p) * t; }
+    return l(l(l(hh(X, Y, Z), hh(X + 1, Y, Z), u), l(hh(X, Y + 1, Z), hh(X + 1, Y + 1, Z), u), v), l(l(hh(X, Y, Z + 1), hh(X + 1, Y, Z + 1), u), l(hh(X, Y + 1, Z + 1), hh(X + 1, Y + 1, Z + 1), u), v), w) * 2 - 1; }
+  var PAL = {
+    chestnut: ["#2A150C", "#4E2918", "#7A4529", "#A86A42", "#E0A877"],
+    caramel: ["#3A210F", "#6E431F", "#A8692F", "#D9A15C", "#FFD59A"],
+    copper: ["#3A1308", "#6E2812", "#A6441F", "#D86F3A", "#FFAE73"],
+    blonde: ["#5A452E", "#8C7253", "#BFA37B", "#E2CCA4", "#FFF0D2"],
+    black: ["#060808", "#111517", "#1E2428", "#38424A", "#8C9AA4"]
+  };
+  function hex(c) { return [parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)]; }
+  var cur = PAL.chestnut.map(hex), target = cur.map(function (c) { return c.slice(); }), current = "chestnut", userPicked = false;
+  function setPalette(p, byUser) {
+    if (byUser) userPicked = true;
+    current = p; target = PAL[p].map(hex);
+    document.querySelectorAll("#sw button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.p === p)); });
+  }
+  document.getElementById("sw").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) setPalette(b.dataset.p, true); });
+
+  var cv = document.getElementById("silk"), ctx = cv.getContext("2d"), W, H, D, strands = [], STEPS = 40, mobile = innerWidth < 820;
+  var mouse = { x: -9999, y: -9999, vx: 0, vy: 0, on: false };
+  function build() {
+    W = innerWidth; H = innerHeight; mobile = W < 820;
+    D = Math.min(devicePixelRatio || 1, mobile ? 1.5 : 2); cv.width = W * D; cv.height = H * D;
+    var n = Math.max(320, Math.min(1000, (W * H) / (mobile ? 900 : 1150)) | 0), x0 = mobile ? -0.15 : 0.3, x1 = 1.15;
+    strands = [];
+    for (var s = 0; s < n; s++) {
+      var lx = x0 + (x1 - x0) * Math.random(), tone = Math.random(), ci = tone < .34 ? 0 : tone < .66 ? 1 : tone < .87 ? 2 : tone < .97 ? 3 : 4;
+      strands.push({ x: lx * W, y: -60 - Math.random() * 60, ph: lx * 2.4 + Math.floor(lx * 9) * .14 + Math.random() * .12, ci: ci, len: (H * (1.15 + Math.random() * .2)) / STEPS, j: Math.random() * 100 });
+    }
+  }
+  var t = 0, skip = false, silkVisible = true;
+  function drawSilk() {
+    t += reduce ? 0 : .006;
+    for (var c = 0; c < 5; c++) for (var k = 0; k < 3; k++) cur[c][k] += (target[c][k] - cur[c][k]) * .05;
+    ctx.setTransform(D, 0, 0, D, 0, 0); ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = "#120B08"; ctx.fillRect(0, 0, W, H);
+    mouse.vx *= .9; mouse.vy *= .9;
+    var paths = [new Path2D(), new Path2D(), new Path2D(), new Path2D(), new Path2D()], shine = new Path2D();
+    for (var s = 0; s < strands.length; s++) {
+      var st = strands[s], x = st.x, y = st.y, ox = 0, oy = 0, p = paths[st.ci], br = st.ci >= 3;
+      p.moveTo(x, y); if (br) shine.moveTo(x, y);
+      for (var i2 = 0; i2 < STEPS; i2++) {
+        var ang = Math.PI / 2 + .12 + .5 * Math.sin(y * .0085 - st.ph + t * .8) + .16 * noise(x * .0016, y * .0016, t * .22) + .03 * noise(st.j, i2 * .15, t);
+        x += Math.cos(ang) * st.len; y += Math.sin(ang) * st.len;
+        if (mouse.on) { var dx = x - mouse.x, dy = y - mouse.y, d2 = dx * dx + dy * dy; if (d2 < 22500) { var d = Math.sqrt(d2) || 1, f = 1 - d / 150; ox += (dx / d) * f * 9 + mouse.vx * f * .5; oy += (dy / d) * f * 4 + mouse.vy * f * .3; } }
+        ox *= .9; oy *= .9;
+        p.lineTo(x + ox, y + oy); if (br) shine.lineTo(x + ox, y + oy);
+      }
+    }
+    ctx.lineCap = "round";
+    var b0 = cur[0]; ctx.strokeStyle = "rgba(" + (b0[0] | 0) + "," + (b0[1] | 0) + "," + (b0[2] | 0) + ",.55)"; ctx.lineWidth = 5; ctx.stroke(paths[0]);
+    for (var c2 = 0; c2 < 5; c2++) { var col = cur[c2]; ctx.strokeStyle = "rgba(" + (col[0] | 0) + "," + (col[1] | 0) + "," + (col[2] | 0) + "," + (c2 < 2 ? .8 : .55) + ")"; ctx.lineWidth = c2 < 2 ? 1.4 : .9; ctx.stroke(paths[c2]); }
+    var sx = ((t * 120) % (W + 800)) - 400, g = ctx.createLinearGradient(sx - 260, 0, sx + 260, H * .4), hl = cur[4];
+    g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(.5, "rgba(" + (hl[0] | 0) + "," + (hl[1] | 0) + "," + (hl[2] | 0) + ",.55)"); g.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.globalCompositeOperation = "lighter"; ctx.strokeStyle = g; ctx.lineWidth = .9; ctx.stroke(shine); ctx.stroke(paths[2]);
+  }
+  function loop() {
+    // phones draw every other frame; nothing is drawn while the transformation covers the screen
+    skip = mobile ? !skip : false;
+    if (silkVisible && !skip && !document.hidden) drawSilk();
+    if (!reduce) requestAnimationFrame(loop);
+  }
+  cv.addEventListener("pointermove", function (e) { var x = e.clientX, y = e.clientY; if (mouse.on) { mouse.vx = x - mouse.x; mouse.vy = y - mouse.y; } mouse.x = x; mouse.y = y; mouse.on = true; });
+  cv.addEventListener("pointerleave", function () { mouse.on = false; });
+  cv.addEventListener("pointercancel", function () { mouse.on = false; });
+
+  /* ---------- transformation: the real video, scrubbed by scroll ----------
+     The files are encoded with a keyframe every 4 frames, so seeking is quick
+     and the browser shows the full source quality instead of re-compressed stills. */
+  var tv = document.getElementById("tv"), dir = null, started = false, primed = false, seeking = false, seekTarget = 0;
+  // phones get the centre of the same wide clip, cut and prepared as its own lighter file
+  function pickDir() { return innerWidth / innerHeight < .9 ? "m" : "l"; }
+  // the clip starts buffering the moment the page opens (preload="auto"), while the
+  // visitor is still on the hero, so by the time they scroll down it is ready to scrub
+  function startFrames() {
+    if (started) return; started = true;
+    tv.src = "video/trans-" + dir + ".mp4"; tv.load();
+  }
+  function sizeT() {
+    var nd = pickDir();
+    if (nd !== dir) { dir = nd; tv.poster = "video/poster-" + dir + ".webp"; if (started) { started = false; primed = false; startFrames(); } }
+  }
+  function seekTo(t) {
+    seekTarget = t;
+    if (!tv.duration || seeking || Math.abs(tv.currentTime - t) < .02) return;
+    seeking = true; tv.currentTime = t;
+  }
+  tv.addEventListener("seeked", function () { seeking = false; if (Math.abs(tv.currentTime - seekTarget) > .03) seekTo(seekTarget); });
+  tv.addEventListener("loadedmetadata", function () {
+    // iOS only paints a muted inline video after it has played once
+    if (!primed) { primed = true; var pr = tv.play(); if (pr && pr.then) pr.then(function () { tv.pause(); seeking = false; seekTo(seekTarget); }).catch(function () {}); }
+    seekTo(seekTarget);
+  });
+
+  /* ---------- scroll ---------- */
+  var trans = document.getElementById("trans"), credits = [].slice.call(document.querySelectorAll(".credit")), sB = document.getElementById("sB"), sA = document.getElementById("sA");
+  var mi = document.getElementById("mi"), mb = document.getElementById("mb"), top = document.getElementById("top"), ticking = false;
+  function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function tick() {
+    ticking = false;
+    var vh = innerHeight, rect = trans.getBoundingClientRect();
+    if (rect.top < vh * 2.5) startFrames();
+    var p = clamp(-rect.top / (trans.offsetHeight - vh)), q = clamp((p - .04) / .8);
+    seekTo(q * ((tv.duration || 7.9) - .05));
+    mi.style.width = q * 100 + "%"; mb.style.left = q * 100 + "%";
+    var aa = clamp((q - .42) / .16); sB.style.opacity = 1 - aa; sB.style.filter = "blur(" + aa * 10 + "px)"; sA.style.opacity = aa; sA.style.filter = "blur(" + (1 - aa) * 10 + "px)";
+    credits.forEach(function (c) { var f = +c.dataset.from, t2 = +c.dataset.to, o = Math.min(clamp((p - f) / .05), 1 - clamp((p - (t2 - .05)) / .05)); c.style.opacity = o; });
+    // hair behind the page: full on the hero, quiet behind prices, paused while covered
+    silkVisible = rect.top > 0 || rect.bottom < vh;
+    cv.style.opacity = rect.top > 0 ? 1 : .42;
+    if (q > .95 && !userPicked && current !== "caramel") setPalette("caramel", false);
+    top.classList.toggle("solid", window.scrollY > vh * .8);
+  }
+  addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(tick); } }, { passive: true });
+  addEventListener("resize", function () { build(); sizeT(); tick(); });
+
+  var initial = null;
+  try { initial = new URLSearchParams(location.search).get("lang") || localStorage.getItem("lang"); } catch (e) {}
+  setLang(initial || "hy");
+  build(); sizeT(); startFrames(); tick(); loop();
+  if (reduce) drawSilk();
+})();
+</script>
+</body>
+</html>

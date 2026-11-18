@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Kilejian's Beauty Lounge · Colour Studio</title>
+<meta name="description" content="Kilejian's Beauty Lounge — ներկում, կերատին, մանիկյուր և հոնքեր Երևանի կենտրոնում։">
+<meta name="theme-color" content="#0d1011">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Noto+Sans+Armenian:wght@300;400;500;600&family=Unbounded:wght@300;400&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="media/h-choc.webp">
+<style>
+@property --ac { syntax: "<color>"; inherits: true; initial-value: #c99a72; }
+@property --glow { syntax: "<color>"; inherits: true; initial-value: #4a2c18; }
+:root {
+  --bg: #0d1011; --ink: #f2ebe3; --mute: rgba(242,235,227,.6); --line: rgba(242,235,227,.14);
+  --ac: #c99a72; --glow: #4a2c18;
+  --pad: clamp(16px, 4.4vw, 64px);
+  --fd: "Unbounded", "Noto Sans Armenian", system-ui, sans-serif;
+  --fb: "Manrope", "Noto Sans Armenian", system-ui, sans-serif;
+  --fm: "IBM Plex Mono", "Noto Sans Armenian", ui-monospace, monospace;
+  transition: --ac 1.4s ease, --glow 1.6s ease;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--fb); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--ac); outline-offset: 3px; }
+
+/* ---------- top bar ---------- */
+.top { position: absolute; z-index: 6; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: calc(14px + env(safe-area-inset-top)) var(--pad) 0; }
+.brand { text-decoration: none; }
+.brand b { display: block; font: 400 17px/1 var(--fd); letter-spacing: -.01em; }
+.brand small { display: block; margin-top: 6px; font: 500 9.5px/1 var(--fm); letter-spacing: .18em; text-transform: uppercase; color: var(--mute); }
+.langs { display: flex; gap: 2px; }
+.langs button { background: none; border: 0; padding: 10px 7px; font: 500 11px/1 var(--fm); letter-spacing: .08em; color: var(--mute); cursor: pointer; }
+.langs button[aria-pressed="true"] { color: var(--ink); }
+
+/* ---------- hero ---------- */
+.hero { position: relative; z-index: 1; background: var(--bg); min-height: 100svh; overflow: hidden; }
+.glow { position: absolute; left: 50%; top: 4%; width: 140vw; height: 80vh; transform: translateX(-50%); background: radial-gradient(closest-side, color-mix(in srgb, var(--glow) 85%, transparent), transparent); opacity: .9; pointer-events: none; }
+.stage { position: relative; width: 100%; aspect-ratio: 3 / 4; max-height: 70svh; margin: 0 auto; touch-action: pan-y; cursor: pointer;
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 97%); mask-image: linear-gradient(to bottom, #000 60%, transparent 97%); }
+.stage canvas, .stage img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.stage img { object-fit: cover; object-position: 50% 30%; transition: opacity .8s ease; }
+.stage canvas { opacity: 0; transition: opacity .6s ease; }
+.stage.gl canvas { opacity: 1; }
+.copy { position: relative; z-index: 2; margin-top: -104px; padding: 0 var(--pad) 56px; }
+.h1 { margin: 0 0 6px; font: 500 11.5px/1.3 var(--fm); letter-spacing: .16em; text-transform: uppercase; color: var(--ink); text-shadow: 0 1px 12px rgba(0,0,0,.8); }
+.code { font: 500 11px/1 var(--fm); letter-spacing: .12em; color: var(--ac); }
+.namebox { --nfs: clamp(34px, 10.2vw, 50px); display: flex; flex-direction: column; justify-content: flex-end; min-height: calc(var(--nfs) * 2.06 + 52px); }
+.sname { margin: 6px 0 0; font: 300 var(--nfs)/1.03 var(--fd); letter-spacing: -.03em; color: var(--ac); text-shadow: 0 2px 30px rgba(0,0,0,.55); transition: opacity .35s ease, filter .35s ease, transform .35s ease; }
+.sname.out { opacity: 0; filter: blur(10px); transform: translateY(8px); }
+
+/* the swatch ring: real hair cut from each photo */
+.ring { position: relative; display: flex; align-items: flex-start; width: fit-content; gap: 7px; margin: 26px 0 0 18px; padding-top: 4px; }
+.ring::before { content: ""; position: absolute; left: -22px; top: 0; width: 22px; height: 22px; border-radius: 50%; border: 2.5px solid #b8b0a5; box-shadow: inset 0 1px 1px rgba(255,255,255,.35), 0 2px 4px rgba(0,0,0,.5); }
+.rod { position: absolute; z-index: 3; left: -4px; right: -8px; top: 12px; height: 3px; border-radius: 3px; background: linear-gradient(#fbf6ee, #a59d93 55%, #5a554f); box-shadow: 0 1px 2px rgba(0,0,0,.55); pointer-events: none; }
+.lock { --h: 118px; position: relative; flex: 0 0 auto; width: 38px; padding: 0; border: 0; background: none; cursor: pointer; transform-origin: 50% 9px; animation: sway 5.5s ease-in-out infinite; animation-delay: calc(var(--i) * -.8s); filter: drop-shadow(0 10px 10px rgba(0,0,0,.45)); -webkit-tap-highlight-color: transparent; }
+.lock.kick { animation: kick 1.2s cubic-bezier(.2,.8,.3,1); }
+.tab { position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: center; height: 30px; padding-bottom: 5px; border-radius: 7px 7px 3px 3px; background: linear-gradient(#f6f1ea, #d6cfc5); color: #2a2420; font: 500 8.5px/1 var(--fm); letter-spacing: .02em; transition: background .4s, transform .4s; }
+.tab::before { content: ""; position: absolute; top: 5px; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: #2a2622; box-shadow: inset 0 1px 2px rgba(0,0,0,.7); }
+.hair { display: block; width: 82%; height: var(--h); margin: -3px auto 0; background-size: cover; background-position: 50% 0; clip-path: polygon(0 0, 100% 0, 97% 38%, 86% 74%, 64% 96%, 50% 100%, 36% 96%, 14% 74%, 3% 38%); transition: height .6s cubic-bezier(.3,1.5,.5,1); }
+.lock[aria-pressed="true"] .hair { height: calc(var(--h) + 30px); }
+.lock[aria-pressed="true"] .tab { background: linear-gradient(#fff, color-mix(in srgb, var(--ac) 45%, #f6f1ea)); }
+.lock:hover .hair { height: calc(var(--h) + 12px); }
+.lock[aria-pressed="true"]:hover .hair { height: calc(var(--h) + 30px); }
+@keyframes sway { 0%, 100% { transform: rotate(-1.6deg); } 50% { transform: rotate(1.6deg); } }
+@keyframes kick { 0% { transform: rotate(0); } 18% { transform: rotate(9deg); } 42% { transform: rotate(-5deg); } 66% { transform: rotate(2.5deg); } 100% { transform: rotate(0); } }
+
+.hint { display: flex; align-items: center; gap: 9px; margin: 14px 0 0; font: 500 11px/1 var(--fm); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); transition: opacity .6s; }
+.hint .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ac); animation: pulse 1.8s ease-out infinite; }
+.hint.gone { opacity: 0; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ac) 70%, transparent); } 100% { box-shadow: 0 0 0 12px transparent; } }
+.sub { max-width: 38ch; margin: 22px 0 0; color: var(--mute); font-size: 15px; }
+.pick { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 20px 0 18px; padding-top: 16px; border-top: 1px solid var(--line); font: 500 15px/1.3 var(--fb); }
+.pick b { font: 500 14px/1.3 var(--fm); color: var(--ac); }
+.ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 50px; padding: 0 24px; border-radius: 999px; border: 0; font: 600 14.5px/1 var(--fb); text-decoration: none; cursor: pointer; transition: transform .25s, background .4s, border-color .3s; }
+.btn:active { transform: scale(.97); }
+.btn-ac { background: var(--ac); color: #140f0c; }
+.btn-gh { border: 1px solid var(--line); color: var(--ink); background: rgba(255,255,255,.02); }
+.btn-gh:hover { border-color: color-mix(in srgb, var(--ac) 60%, transparent); }
+.btn svg { width: 16px; height: 16px; }
+
+@media (min-width: 960px) {
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) min(calc(100svh * .75), 50vw); min-height: max(100svh, 640px); }
+  .glow { left: auto; right: -10vw; top: -10vh; width: 80vw; height: 120vh; transform: none; }
+  .stage { grid-column: 2; grid-row: 1; height: 100%; max-height: none; aspect-ratio: auto;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 26%), linear-gradient(to bottom, #000 82%, transparent);
+    -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent, #000 26%), linear-gradient(to bottom, #000 82%, transparent); mask-composite: intersect; }
+  .copy { grid-column: 1; grid-row: 1; align-self: center; margin: 0; padding: 110px 0 64px var(--pad); }
+  .h1 { font: 300 clamp(22px, 2vw, 30px)/1.2 var(--fd); letter-spacing: -.01em; text-transform: none; text-shadow: none; margin-bottom: 26px; }
+  .namebox { --nfs: clamp(54px, 6vw, 100px); min-height: 0; }
+  .sname { white-space: nowrap; margin-right: -40vw; position: relative; z-index: 3; }
+  .ring { margin-top: 34px; gap: 10px; }
+  .lock { --h: 150px; width: 46px; }
+  .tab { height: 34px; font-size: 9.5px; }
+  .sub { font-size: 16px; }
+  .pick { max-width: 520px; }
+}
+
+/* ---------- services: a flip deck that turns with the scroll ---------- */
+.svc { position: relative; z-index: 1; height: calc(100svh + 3 * 78svh); }
+.kicker { font: 500 11px/1 var(--fm); letter-spacing: .16em; text-transform: uppercase; color: var(--ac); }
+h2 { margin: .4em 0 .35em; font: 300 clamp(32px, 5.2vw, 70px)/1.05 var(--fd); letter-spacing: -.025em; }
+.pin { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; padding: 54px var(--pad) 22px; overflow: hidden; }
+.svc-grid { width: 100%; max-width: 1180px; margin: 0 auto; display: grid; grid-template-areas: "head" "deck" "now"; gap: 14px; }
+.svc-head { grid-area: head; }
+.svc-head h2 { margin: .3em 0 0; font-size: clamp(28px, 7.4vw, 70px); }
+.svc-head p { display: none; margin: 14px 0 0; max-width: 40ch; color: var(--mute); }
+.deck { grid-area: deck; position: relative; height: min(52svh, 116vw); aspect-ratio: 3 / 4; margin: 0 auto; perspective: 1500px; }
+.card { position: absolute; inset: 0; transform-origin: 50% 0; transform-style: preserve-3d; will-change: transform; }
+.face { position: absolute; inset: 0; border-radius: 22px; overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.front { background: #151a1b; box-shadow: 0 30px 60px -28px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.06); }
+.front img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.front::after { content: ""; position: absolute; inset: 0; background: #07090a; opacity: var(--dim, 0); }
+.front .badge { position: absolute; top: 14px; left: 14px; padding: 7px 10px; border-radius: 999px; background: rgba(8,10,11,.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); font: 500 10.5px/1 var(--fm); letter-spacing: .12em; color: var(--ink); }
+.front .chip2 { position: absolute; right: 14px; bottom: 14px; padding: 8px 12px; border-radius: 999px; background: var(--ac); color: #140f0c; font: 500 11.5px/1 var(--fm); transition: background 1.2s; }
+.back { transform: rotateX(180deg); background: #efe9e1; color: #1b1714; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+.back b { font: 400 26px/1 var(--fd); letter-spacing: -.01em; }
+.back small { font: 500 10px/1 var(--fm); letter-spacing: .2em; text-transform: uppercase; color: #6d645b; }
+.now { grid-area: now; min-height: 128px; transition: opacity .25s ease, transform .25s ease; }
+.now.out { opacity: 0; transform: translateY(6px); }
+.no { font: 500 11px/1 var(--fm); letter-spacing: .12em; color: var(--ac); }
+.now h3 { margin: 8px 0 6px; font: 300 clamp(22px, 6vw, 40px)/1.12 var(--fd); letter-spacing: -.02em; }
+.now p { margin: 0 0 10px; color: var(--mute); max-width: 36ch; }
+.from { font: 500 13.5px/1 var(--fm); color: var(--ink); text-decoration: none; }
+a.from { border-bottom: 1px solid var(--ac); padding-bottom: 3px; }
+.ticks { display: flex; gap: 6px; margin-top: 16px; }
+.ticks i { position: relative; flex: 0 0 34px; height: 3px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.ticks i b { position: absolute; inset: 0; transform-origin: 0 50%; transform: scaleX(0); background: var(--ac); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (min-width: 900px) {
+  .pin { padding: 70px var(--pad) 40px; }
+  .svc-grid { grid-template-columns: 1fr auto; grid-template-areas: "head deck" "now deck"; column-gap: clamp(40px, 7vw, 110px); row-gap: 30px; align-items: end; }
+  .svc-head { align-self: end; }
+  .svc-head p { display: block; }
+  .now { align-self: start; }
+  .deck { height: min(74svh, 640px); }
+}
+@media (max-height: 640px) and (max-width: 899px) { .svc-head h2 { font-size: 24px; } .deck { height: 46svh; } .now p { display: none; } }
+
+/* ---------- price: a colourist's formula label ---------- */
+.price { position: relative; z-index: 1; padding: clamp(30px, 6vw, 90px) var(--pad); }
+.label { max-width: 1000px; margin: 0 auto; padding: clamp(22px, 4.2vw, 56px); border-radius: 22px; background: #efe9e1; color: #1b1714; box-shadow: 0 50px 90px -40px rgba(0,0,0,.85); }
+.lab-top { display: flex; justify-content: space-between; gap: 10px; padding-bottom: 12px; border-bottom: 1.5px solid #1b1714; font: 500 10.5px/1.2 var(--fm); letter-spacing: .14em; text-transform: uppercase; color: #6d645b; }
+.label h2 { color: #1b1714; margin-bottom: .25em; }
+.label .lead { margin: 0 0 22px; color: #6d645b; font-size: 14.5px; }
+.chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 30px; }
+.chip { width: 30px; height: 48px; padding: 0; border: 0; border-radius: 6px; background-size: cover; background-position: 50% 30%; cursor: pointer; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); transition: transform .3s; }
+.chip[aria-pressed="true"] { outline: 2px solid #1b1714; outline-offset: 2px; transform: translateY(-3px); }
+.cols { display: grid; gap: 30px; }
+.group h3 { margin: 0 0 6px; font: 500 11px/1 var(--fm); letter-spacing: .14em; text-transform: uppercase; color: #6d645b; }
+.line { display: grid; grid-template-columns: 28px 1fr auto; align-items: baseline; gap: 10px; padding: 12px 0; border-top: 1px solid rgba(27,23,20,.13); }
+.line .c { font: 500 10.5px/1 var(--fm); color: #9a8f84; }
+.line .n { font: 500 15px/1.3 var(--fb); }
+.line b { font: 500 14px/1.3 var(--fm); white-space: nowrap; }
+.lab-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 18px; margin-top: 26px; }
+.note { margin: 0; max-width: 52ch; font-size: 13px; color: #6d645b; }
+.barcode { width: 168px; height: 34px; background: repeating-linear-gradient(90deg, #1b1714 0 2px, transparent 2px 4px, #1b1714 4px 5px, transparent 5px 9px, #1b1714 9px 12px, transparent 12px 14px, #1b1714 14px 15px, transparent 15px 19px); }
+@media (min-width: 800px) { .cols { grid-template-columns: 1fr 1fr; gap: 60px; } }
+
+/* ---------- visit ---------- */
+.visit { position: relative; z-index: 1; padding: clamp(80px, 12vw, 160px) var(--pad) 90px; max-width: 1240px; margin: 0 auto; }
+.score { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 14px; }
+.score b { font: 300 clamp(54px, 7vw, 84px)/1 var(--fd); color: var(--ac); }
+.score span { color: var(--mute); }
+.branches { display: grid; gap: 14px; margin: 34px 0 22px; }
+.branch { padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.02); }
+.branch h3 { margin: 0 0 4px; font: 300 22px/1.2 var(--fd); }
+.branch p { margin: 0 0 16px; color: var(--mute); }
+.branch .row { display: flex; flex-wrap: wrap; gap: 10px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-top: 70px; padding-top: 20px; border-top: 1px solid var(--line); font: 500 11px/1.4 var(--fm); letter-spacing: .08em; color: var(--mute); }
+@media (min-width: 800px) { .branches { grid-template-columns: 1fr 1fr; } }
+
+.demo { position: fixed; z-index: 20; left: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); max-width: calc(100vw - 24px); padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line); background: rgba(14,16,17,.78); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font: 500 10.5px/1.2 var(--fm); color: var(--mute); pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lock { animation: none; }
+  .item figure, .item img { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#"><b>Kilejian's</b><small>Beauty Lounge</small></a>
+  <div class="langs" role="group" aria-label="Language">
+    <button type="button" data-lang="hy" aria-pressed="true">ՀԱՅ</button>
+    <button type="button" data-lang="ru" aria-pressed="false">РУС</button>
+    <button type="button" data-lang="en" aria-pressed="false">ENG</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="h1">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="stage" id="stage">
+      <img id="still" src="media/h-choc.webp" alt="" width="896" height="1200" fetchpriority="high">
+      <canvas id="gl"></canvas>
+    </div>
+    <div class="copy">
+      <div class="namebox">
+        <h1 class="h1" id="h1" data-t="h1"></h1>
+        <span class="code" id="code">N° 5.7</span>
+        <p class="sname" id="sname" aria-live="polite"></p>
+      </div>
+      <div class="ring" id="ring" role="group"></div>
+      <p class="hint" id="hint"><span class="dot"></span><span data-t="hint"></span></p>
+      <p class="sub" data-t="sub"></p>
+      <p class="pick"><span id="pickName"></span><b id="pickPrice"></b></p>
+      <div class="ctas">
+        <a class="btn btn-ac" href="https://n1400017.alteg.io/select-city/459/select-branch" target="_blank" rel="noopener" data-t="book_this"></a>
+        <a class="btn btn-gh" href="tel:+37444550650"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>044 55 06 50</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="svc" id="svc" aria-labelledby="sH">
+    <div class="pin">
+      <div class="svc-grid">
+        <div class="svc-head">
+          <span class="kicker">Kilejian's · Lounge</span>
+          <h2 id="sH" data-t="s_title"></h2>
+          <p data-t="s_sub"></p>
+        </div>
+        <div class="deck" id="deck" aria-hidden="true"></div>
+        <div class="now" id="now" aria-live="polite">
+          <span class="no" id="nowNo">01 / 04</span>
+          <h3 id="nowT"></h3>
+          <p id="nowP"></p>
+          <span class="from" id="nowF"></span>
+          <div class="ticks" id="ticks"></div>
+        </div>
+      </div>
+    </div>
+    <ul class="sr" id="svcList"></ul>
+  </section>
+
+  <section class="price" aria-labelledby="pH">
+    <div class="label">
+      <div class="lab-top"><span>Kilejian's · Colour bar</span><span id="labCode">N° 5.7</span></div>
+      <h2 id="pH" data-t="m_title"></h2>
+      <p class="lead" data-t="m_sub"></p>
+      <div class="chips" id="chips" role="group"></div>
+      <div class="cols" id="cols"></div>
+      <div class="lab-foot"><p class="note" data-t="m_note"></p><span class="barcode" aria-hidden="true"></span></div>
+    </div>
+  </section>
+
+  <section class="visit" aria-labelledby="vH">
+    <span class="kicker">Kilejian's · Yerevan</span>
+    <h2 id="vH" data-t="v_title"></h2>
+    <div class="score"><b>4.8</b><span data-t="v_score"></span></div>
+    <div class="branches">
+      <div class="branch"><h3 data-t="b1"></h3><p data-t="hours"></p><div class="row"><a class="btn btn-ac" href="tel:+37444550650">044 55 06 50</a><a class="btn btn-gh" href="https://www.google.com/maps/search/?api=1&amp;query=Kilejian%27s+Beauty+Lounge+Nalbandyan+3+Yerevan" target="_blank" rel="noopener" data-t="map"></a></div></div>
+      <div class="branch"><h3 data-t="b2"></h3><p data-t="hours"></p><div class="row"><a class="btn btn-ac" href="tel:+37495550650">095 55 06 50</a><a class="btn btn-gh" href="https://www.google.com/maps/search/?api=1&amp;query=Kilejian%27s+Beauty+Lounge+Saryan+26%2F3+Yerevan" target="_blank" rel="noopener" data-t="map"></a></div></div>
+    </div>
+    <div class="links">
+      <a class="btn btn-ac" href="https://n1400017.alteg.io/select-city/459/select-branch" target="_blank" rel="noopener" data-t="book_online"></a>
+      <a class="btn btn-gh" href="https://www.instagram.com/kilejians_beauty_lounge/" target="_blank" rel="noopener">Instagram</a>
+      <a class="btn btn-gh" href="https://www.instagram.com/kilejians_shop_/" target="_blank" rel="noopener">Kilejian's Shop</a>
+    </div>
+    <div class="foot"><span>© Kilejian's Beauty Lounge</span><span data-t="city"></span></div>
+  </section>
+</main>
+<div class="demo" data-t="demo"></div>
+
+<script>
+(function () {
+  "use strict";
+  var T = {
+    h1: { hy: "Գտեք Ձեր երանգը", ru: "Найдите свой оттенок", en: "Find your shade" },
+    hint: { hy: "Հպեք փնջին", ru: "Нажмите на прядь", en: "Tap a strand" },
+    sub: { hy: "Ընտրեք փունջը, և գույնը կհոսի նրա մազերով՝ արմատներից մինչև ծայրերը։ Տեսեք արդյունքը մինչև գրանցվելը։", ru: "Выберите прядь — и цвет потечёт по её волосам от корней до кончиков. Посмотрите результат ещё до записи.", en: "Pick a strand and the colour flows through her hair, roots to ends. See it before you book." },
+    book_this: { hy: "Գրանցվել այս գույնի համար", ru: "Записаться на этот цвет", en: "Book this colour" },
+    book_online: { hy: "Գրանցվել օնլայն", ru: "Записаться онлайн", en: "Book online" },
+    s_title: { hy: "Ոչ միայն գույն", ru: "Не только цвет", en: "Not just colour" },
+    s_sub: { hy: "Կերատին, մանիկյուր, հոնքեր և պրոֆեսիոնալ խնամք տան համար՝ մեր խանութից։", ru: "Кератин, маникюр, брови и профессиональный уход для дома из нашего магазина.", en: "Keratin, nails, brows and professional care to take home from our shop." },
+    m_title: { hy: "Գնացուցակ", ru: "Прайс", en: "Price list" },
+    m_sub: { hy: "Գները երկու սրահում էլ նույնն են", ru: "Цены одинаковые в обоих салонах", en: "Same prices in both lounges" },
+    m_note: { hy: "Գինը կախված է մազերի երկարությունից։ Ճշգրիտ գինը՝ վարպետի հետ խորհրդատվությունից հետո։", ru: "Цена зависит от длины волос. Точная цена — после консультации с мастером.", en: "Prices depend on hair length. Your stylist confirms the exact price." },
+    v_title: { hy: "Երկու սրահ՝ կենտրոնում", ru: "Два салона в центре", en: "Two lounges downtown" },
+    v_score: { hy: "356 կարծիք Google-ում", ru: "356 отзывов в Google", en: "356 reviews on Google" },
+    b1: { hy: "Նալբանդյան 3", ru: "Налбандяна 3", en: "3 Nalbandyan St" },
+    b2: { hy: "Սարյան 26/3", ru: "Сарьяна 26/3", en: "26/3 Saryan St" },
+    hours: { hy: "Ամեն օր 9:00–20:00", ru: "Ежедневно 9:00–20:00", en: "Every day 9:00–20:00" },
+    map: { hy: "Քարտեզ", ru: "Карта", en: "Map" },
+    city: { hy: "Երևան, Հայաստան", ru: "Ереван, Армения", en: "Yerevan, Armenia" },
+    demo: { hy: "Դեմո՝ Kilejian's-ի համար · գները օրինակ են", ru: "Демо для Kilejian's · цены — пример", en: "Demo for Kilejian's · sample prices" }
+  };
+  var SV = {
+    one: [{ hy: "Միագույն ներկում", ru: "Окрашивание в один тон", en: "Single-colour dye" }, 15000],
+    blonde: [{ hy: "Բլոնդ և գունազրկում", ru: "Блонд и осветление", en: "Blonde & lightening" }, 30000],
+    balayage: [{ hy: "Բալայաժ", ru: "Балаяж", en: "Balayage" }, 35000]
+  };
+  // shade: file key, code, name, technique, accent, glow, strand palette
+  var SH = [
+    { k: "choc", code: "5.7", n: { hy: "Շոկոլադ", ru: "Шоколад", en: "Chocolate" }, s: "one", ac: "#cfa07a", glow: "#4a2c18", pal: ["#1f120b", "#4a2c1a", "#7a5136", "#b07f57"] },
+    { k: "champagne", code: "10.31", n: { hy: "Շամպայն", ru: "Шампань", en: "Champagne" }, s: "blonde", ac: "#ecd8b5", glow: "#574832", pal: ["#5e4c38", "#9d8566", "#cdb796", "#f1e3c8"] },
+    { k: "caramel", code: "7.34", n: { hy: "Կարամել", ru: "Карамель", en: "Caramel" }, s: "balayage", ac: "#e8ac6c", glow: "#5a3416", pal: ["#40200c", "#8a5124", "#c07e43", "#ebb67b"] },
+    { k: "copper", code: "7.44", n: { hy: "Պղինձ", ru: "Медь", en: "Copper" }, s: "one", ac: "#f08752", glow: "#5e2410", pal: ["#3e1406", "#8c3614", "#c95c27", "#f19359"] },
+    { k: "cherry", code: "4.65", n: { hy: "Բալ", ru: "Вишня", en: "Black cherry" }, s: "one", ac: "#de6f86", glow: "#4a1020", pal: ["#1a060b", "#4a1220", "#7a2236", "#b04d63"] },
+    { k: "black", code: "1.1", n: { hy: "Կապտասև", ru: "Иссиня-чёрный", en: "Blue black" }, s: "one", ac: "#a9bde6", glow: "#18223e", pal: ["#05070c", "#111829", "#24304d", "#5a6d96"] },
+    { k: "rose", code: "9.26", n: { hy: "Վարդագույն ոսկի", ru: "Розовое золото", en: "Rose gold" }, s: "blonde", ac: "#f4b6a6", glow: "#5a2c2a", pal: ["#6e403b", "#b37669", "#e0a698", "#f7d0c3"] }
+  ];
+  var ITEMS = [
+    ["colour", { hy: "Ներկում և բալայաժ", ru: "Окрашивание и балаяж", en: "Colour & balayage" }, { hy: "Բնական անցումներ և փայլ, որը տեսանելի է արևի տակ։", ru: "Мягкие переходы и блеск, заметный на солнце.", en: "Soft blends and a shine you notice in the sun." }, 15000],
+    ["keratin", { hy: "Կերատին և բոտոքս", ru: "Кератин и ботокс", en: "Keratin & botox" }, { hy: "Հարթ, հայելու պես փայլուն մազեր ամիսներով։", ru: "Гладкие волосы с зеркальным блеском на месяцы.", en: "Smooth, mirror-shine hair for months." }, 25000],
+    ["nails", { hy: "Մանիկյուր և պեդիկյուր", ru: "Маникюр и педикюр", en: "Manicure & pedicure" }, { hy: "Գել-լաք, ձև և դիզայն՝ խնամքով և երկար։", ru: "Гель-лак, форма и дизайн — аккуратно и стойко.", en: "Gel polish, shape and design, done with care." }, 7000],
+    ["brows", { hy: "Հոնքեր և թարթիչներ", ru: "Брови и ресницы", en: "Brows & lashes" }, { hy: "Լամինացիա, ներկում և ձև, որը սազում է դեմքին։", ru: "Ламинирование, окрашивание и форма под ваше лицо.", en: "Lamination, tint and a shape that suits your face." }, 3000]
+  ];
+  var MENU = [
+    [{ hy: "Մազեր", ru: "Волосы", en: "Hair" }, [
+      [{ hy: "Կանացի սանրվածք", ru: "Женская стрижка", en: "Women's haircut" }, 8000],
+      [{ hy: "Հարդարում", ru: "Укладка", en: "Blow-dry" }, 6000],
+      [{ hy: "Միագույն ներկում", ru: "Окрашивание в один тон", en: "Single-colour dye" }, 15000],
+      [{ hy: "Բլոնդ և գունազրկում", ru: "Блонд и осветление", en: "Blonde & lightening" }, 30000],
+      [{ hy: "Բալայաժ", ru: "Балаяж", en: "Balayage" }, 35000],
+      [{ hy: "Կերատին", ru: "Кератин", en: "Keratin" }, 30000],
+      [{ hy: "Մազերի բոտոքս", ru: "Ботокс для волос", en: "Hair botox" }, 25000]]],
+    [{ hy: "Եղունգներ, հոնքեր, թարթիչներ", ru: "Ногти, брови, ресницы", en: "Nails, brows, lashes" }, [
+      [{ hy: "Մանիկյուր գել-լաքով", ru: "Маникюр с гель-лаком", en: "Gel manicure" }, 7000],
+      [{ hy: "Պեդիկյուր", ru: "Педикюр", en: "Pedicure" }, 9000],
+      [{ hy: "Հոնքերի լամինացիա", ru: "Ламинирование бровей", en: "Brow lamination" }, 6000],
+      [{ hy: "Հոնքերի ներկում", ru: "Окрашивание бровей", en: "Brow tint" }, 3000],
+      [{ hy: "Թարթիչների լամինացիա", ru: "Ламинирование ресниц", en: "Lash lift" }, 8000]]]
+  ];
+
+  var $ = function (s) { return document.querySelector(s); };
+  var lang = "hy", cur = 0, reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function num(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, lang === "en" ? "," : " ") + " ֏"; }
+  function from(n) { return lang === "hy" ? num(n) + "-ից" : lang === "ru" ? "от " + num(n) : "from " + num(n); }
+
+  /* ---------- build the ring, chips, services, menu ---------- */
+  var ring = $("#ring"), chips = $("#chips");
+  ring.innerHTML = '<span class="rod" aria-hidden="true"></span>' + SH.map(function (s, i) {
+    return '<button type="button" class="lock" style="--i:' + i + '" data-i="' + i + '" aria-pressed="' + (i === 0) + '"><span class="tab">' + s.code + '</span><span class="hair" style="background-image:url(media/lock-' + s.k + '.webp)"></span></button>';
+  }).join("");
+  chips.innerHTML = SH.map(function (s, i) {
+    return '<button type="button" class="chip" data-i="' + i + '" aria-pressed="' + (i === 0) + '" style="background-image:url(media/lock-' + s.k + '.webp)"></button>';
+  }).join("");
+  [].forEach.call(document.querySelectorAll(".lock, .chip"), function (b) {
+    b.addEventListener("click", function () {
+      var i = +b.dataset.i;
+      if (b.classList.contains("lock") && !reduce) { b.classList.remove("kick"); void b.offsetWidth; b.classList.add("kick"); }
+      select(i, true);
+    });
+  });
+  [].forEach.call(document.querySelectorAll(".lock"), function (b) { b.addEventListener("animationend", function () { b.classList.remove("kick"); }); });
+
+  function render() {
+    $("#svcList").innerHTML = ITEMS.map(function (c) { return "<li>" + esc(c[1][lang]) + " — " + esc(c[2][lang]) + " " + from(c[3]) + "</li>"; }).join("");
+    var k = 0;
+    $("#cols").innerHTML = MENU.map(function (g) {
+      return '<div class="group"><h3>' + esc(g[0][lang]) + "</h3>" + g[1].map(function (l) { k++; return '<div class="line"><span class="c">' + (k < 10 ? "0" + k : k) + '</span><span class="n">' + esc(l[0][lang]) + "</span><b>" + from(l[1]) + "</b></div>"; }).join("") + "</div>";
+    }).join("");
+    if (window.__deck) __deck.text(true);
+  }
+  function shadeText(i, instant) {
+    var s = SH[i], el = $("#sname");
+    function put() {
+      el.textContent = s.n[lang];
+      $("#code").textContent = "N° " + s.code;
+      $("#labCode").textContent = "N° " + s.code + " · " + s.n.en;
+      $("#pickName").textContent = SV[s.s][0][lang];
+      $("#pickPrice").textContent = from(SV[s.s][1]);
+    }
+    if (instant || reduce) { put(); return; }
+    el.classList.add("out");
+    setTimeout(function () { put(); el.classList.remove("out"); }, 330);
+  }
+  function setLang(l) {
+    lang = ["hy", "ru", "en"].indexOf(l) >= 0 ? l : "hy";
+    document.documentElement.lang = lang;
+    [].forEach.call(document.querySelectorAll("[data-t]"), function (e) { e.textContent = T[e.dataset.t][lang]; });
+    [].forEach.call(document.querySelectorAll("[data-lang]"), function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === lang)); });
+    [].forEach.call(document.querySelectorAll(".lock, .chip"), function (b) { b.setAttribute("aria-label", SH[+b.dataset.i].n[lang] + " · " + SH[+b.dataset.i].code); });
+    ring.setAttribute("aria-label", T.h1[lang]); chips.setAttribute("aria-label", T.h1[lang]);
+    render(); shadeText(cur, true);
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+  }
+  [].forEach.call(document.querySelectorAll("[data-lang]"), function (b) { b.addEventListener("click", function () { setLang(b.dataset.lang); }); });
+
+  /* ---------- choosing a shade ---------- */
+  var auto = null, touched = false;
+  function select(i, user) {
+    if (user) stopAuto();
+    if (i === cur) return;
+    cur = i;
+    var s = SH[i], root = document.documentElement.style;
+    root.setProperty("--ac", s.ac); root.setProperty("--glow", s.glow);
+    [].forEach.call(document.querySelectorAll(".lock, .chip"), function (b) { b.setAttribute("aria-pressed", String(+b.dataset.i === i)); });
+    shadeText(i);
+    if (portrait) portrait.go(i); else { var st = $("#still"); st.style.opacity = 0; setTimeout(function () { st.src = "media/h-" + s.k + ".webp"; st.onload = function () { st.style.opacity = 1; }; }, 400); }
+  }
+  function stopAuto() {
+    touched = true;
+    if (auto) { clearTimeout(auto); auto = null; }
+    $("#hint").classList.add("gone");
+  }
+  var ORDER = [3, 1, 4, 6, 2, 5, 0], step = 0;
+  function runAuto(delay) {
+    if (touched || reduce) return;
+    auto = setTimeout(function () {
+      if (touched) return;
+      if (heroOn && !document.hidden) { select(ORDER[step % ORDER.length], false); step++; }
+      runAuto(3900);
+    }, delay);
+  }
+
+  /* ---------- WebGL portrait: the dye flows from roots to ends ---------- */
+  var VS = "attribute vec2 p;varying vec2 v;void main(){v=p*.5+.5;gl_Position=vec4(p,0.,1.);}";
+  var FS = [
+    "precision mediump float;",
+    "varying vec2 v;",
+    "uniform sampler2D A,B,M;",
+    "uniform float prog,time,hov;",
+    "uniform vec4 crop;",
+    "uniform vec2 mouse;",
+    "float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}",
+    "float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1.,0.)),f.x),mix(h(i+vec2(0.,1.)),h(i+vec2(1.,1.)),f.x),f.y);}",
+    "float fbm(vec2 p){float s=0.,a=.5;for(int k=0;k<4;k++){s+=a*n(p);p*=2.03;a*=.5;}return s;}",
+    "void main(){",
+    "  vec2 uv=crop.xy+vec2(v.x,1.-v.y)*crop.zw;",
+    "  vec3 a=texture2D(A,uv).rgb, b=texture2D(B,uv).rgb;",
+    "  float m=texture2D(M,uv).r;",
+    "  float nz=fbm(uv*vec2(7.,3.2)+vec2(time*.04,-time*.07));",
+    "  float fr=mix(-.14,1.16,prog);",
+    "  float e=fr-uv.y+(nz-.5)*.26+sin(uv.x*22.+uv.y*6.)*.012;",
+    "  float r=smoothstep(-.012,.03,e);",
+    "  vec3 col=mix(a,b,r);",
+    "  float live=step(.0005,prog)*(1.-step(.9995,prog));",
+    "  float band=exp(-e*e/.0016)*m*live;",
+    "  col+=band*(.10+.55*b)*.75;",
+    "  vec2 d=(uv-mouse)*vec2(.75,1.);",
+    "  float spot=exp(-dot(d,d)/.006)*hov*m;",
+    "  float fib=.55+.45*fbm(uv*vec2(60.,7.)+vec2(0.,time*.15));",
+    "  col+=spot*(.06+.5*col)*fib;",
+    "  float sw=sin(uv.y*8.-uv.x*3.-time*.6);",
+    "  col*=1.+m*.06*smoothstep(.82,1.,sw);",
+    "  gl_FragColor=vec4(col,1.);",
+    "}"
+  ].join("\n");
+
+  var stage = $("#stage"), heroOn = true;
+  var portrait = (function () {
+    var cv = $("#gl"), gl;
+    try { gl = cv.getContext("webgl", { alpha: false, antialias: false, premultipliedAlpha: false }); } catch (e) { gl = null; }
+    if (!gl) return null;
+    function sh(t, s) { var o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null; }
+    var vs = sh(gl.VERTEX_SHADER, VS), fs = sh(gl.FRAGMENT_SHADER, FS);
+    if (!vs || !fs) return null;
+    var pr = gl.createProgram(); gl.attachShader(pr, vs); gl.attachShader(pr, fs); gl.linkProgram(pr);
+    if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return null;
+    gl.useProgram(pr);
+    var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    var loc = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    var U = {}; ["A", "B", "M", "prog", "time", "hov", "crop", "mouse"].forEach(function (k) { U[k] = gl.getUniformLocation(pr, k); });
+    gl.uniform1i(U.A, 0); gl.uniform1i(U.B, 1); gl.uniform1i(U.M, 2);
+    var TX = [], TM = null, loading = {};
+    function upload(img) {
+      var t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      return t;
+    }
+    function loadImg(src) { return new Promise(function (ok, no) { var im = new Image(); im.onload = function () { ok(im); }; im.onerror = no; im.src = src; }); }
+    function tex(i) {
+      if (TX[i]) return Promise.resolve(TX[i]);
+      if (!loading[i]) loading[i] = loadImg("media/h-" + SH[i].k + ".webp").then(function (im) { TX[i] = upload(im); return TX[i]; });
+      return loading[i];
+    }
+    var W = 0, H = 0, crop = [0, 0, 1, 1], IA = 896 / 1200;
+    function size() {
+      var r = cv.getBoundingClientRect(), D = Math.min(devicePixelRatio || 1, innerWidth < 700 ? 1.75 : 1.5);
+      W = Math.max(2, Math.round(r.width * D)); H = Math.max(2, Math.round(r.height * D));
+      if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+      gl.viewport(0, 0, W, H);
+      var ca = r.width / Math.max(1, r.height), sx = 1, sy = 1;
+      if (ca > IA) sy = IA / ca; else sx = ca / IA;
+      var ox = Math.min(Math.max(.5 - sx / 2, 0), 1 - sx), oy = Math.min(Math.max(.33 - sy / 2, 0), 1 - sy);
+      crop = [ox, oy, sx, sy];
+      gl.uniform4f(U.crop, ox, oy, sx, sy);
+    }
+    var fromI = 0, toI = 0, prog = 1, t0 = 0, DUR = 2000, hov = 0, hovT = 0, mouse = [.5, .3], raf = 0, start = performance.now();
+    function ease(x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+    function frame(now) {
+      raf = 0;
+      if (!heroOn || document.hidden || !TX[fromI] || !TM) return;
+      if (prog < 1) { prog = Math.min(1, (now - t0) / DUR); if (prog >= 1) fromI = toI; }
+      hov += (hovT - hov) * .07;
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, TX[fromI]);
+      gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, TX[prog < 1 ? toI : fromI]);
+      gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, TM);
+      gl.uniform1f(U.prog, prog < 1 ? ease(prog) : 0);
+      gl.uniform1f(U.time, (now - start) / 1000);
+      gl.uniform1f(U.hov, hov);
+      gl.uniform2f(U.mouse, mouse[0], mouse[1]);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      if (!stage.classList.contains("gl")) stage.classList.add("gl");
+      kick();
+    }
+    function kick() { if (!raf) raf = requestAnimationFrame(frame); }
+    function go(i) {
+      tex(i).then(function () {
+        if (cur !== i) return;
+        if (prog < 1) fromI = toI;
+        if (i === fromI) return;
+        toI = i; prog = 0; t0 = performance.now(); kick();
+      });
+    }
+    // pointer: a soft light that follows the finger over the hair; a tap tries the next shade
+    var downAt = null;
+    function setMouse(e) { var r = cv.getBoundingClientRect(); mouse = [crop[0] + (e.clientX - r.left) / r.width * crop[2], crop[1] + (e.clientY - r.top) / r.height * crop[3]]; }
+    stage.addEventListener("pointermove", function (e) { setMouse(e); hovT = 1; kick(); });
+    stage.addEventListener("pointerleave", function () { hovT = 0; });
+    stage.addEventListener("pointerdown", function (e) { setMouse(e); hovT = 1; downAt = [e.clientX, e.clientY, performance.now()]; });
+    stage.addEventListener("pointercancel", function () { downAt = null; hovT = 0; });
+    stage.addEventListener("pointerup", function (e) {
+      if (e.pointerType !== "mouse") setTimeout(function () { hovT = 0; }, 500);
+      if (!downAt) return;
+      var moved = Math.abs(e.clientX - downAt[0]) + Math.abs(e.clientY - downAt[1]);
+      if (moved < 12 && performance.now() - downAt[2] < 500) {
+        var nx = (cur + 1) % SH.length, lk = ring.children[nx + 1];
+        if (lk && !reduce) { lk.classList.remove("kick"); void lk.offsetWidth; lk.classList.add("kick"); }
+        select(nx, true);
+      }
+      downAt = null;
+    });
+    addEventListener("resize", function () { size(); kick(); });
+    size();
+    Promise.all([tex(0), loadImg("media/mask.webp").then(function (im) { TM = upload(im); })]).then(function () {
+      size(); kick();
+      SH.forEach(function (s, i) { setTimeout(function () { tex(i); }, 300 + i * 250); });
+      runAuto(2200);
+    }).catch(function () { stage.classList.remove("gl"); });
+    return { go: go, kick: kick };
+  })();
+  if (!portrait) runAuto(2600);
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (en) { heroOn = en[0].isIntersecting; if (heroOn && portrait) portrait.kick(); }, { threshold: 0.05 }).observe(stage);
+  }
+  document.addEventListener("visibilitychange", function () { if (!document.hidden && portrait) portrait.kick(); });
+
+  /* ---------- the flip deck: each scroll step turns the top card up and over ---------- */
+  var deck = (function () {
+    var sec = $("#svc"), box = $("#deck"), now = $("#now"), N = ITEMS.length, cards = [], active = -1, raf = 0;
+    box.innerHTML = ITEMS.map(function (c, i) {
+      return '<article class="card"><div class="face front"><img src="media/s-' + c[0] + '.webp" alt="" width="896" height="1200"' + (i > 1 ? ' loading="lazy"' : "") + '><span class="badge">0' + (i + 1) + ' / 0' + N + '</span><span class="chip2"></span></div><div class="face back"><b>Kilejian\'s</b><small>Beauty Lounge</small></div></article>';
+    }).join("");
+    cards = [].slice.call(box.children);
+    $("#ticks").innerHTML = ITEMS.map(function () { return "<i><b></b></i>"; }).join("");
+    var ticks = [].slice.call(document.querySelectorAll("#ticks b"));
+    function sm(t) { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); }
+    function text(instant) {
+      var i = Math.max(0, active), c = ITEMS[i];
+      function put() {
+        $("#nowNo").textContent = "0" + (i + 1) + " / 0" + N;
+        $("#nowT").textContent = c[1][lang]; $("#nowP").textContent = c[2][lang]; $("#nowF").textContent = from(c[3]);
+      }
+      cards.forEach(function (el, k) { el.querySelector(".chip2").textContent = from(ITEMS[k][3]); });
+      if (instant || reduce) { put(); return; }
+      now.classList.add("out");
+      clearTimeout(text.t); text.t = setTimeout(function () { put(); now.classList.remove("out"); }, 220);
+    }
+    function update() {
+      raf = 0;
+      var r = sec.getBoundingClientRect(), total = Math.max(1, sec.offsetHeight - innerHeight);
+      var P = Math.max(0, Math.min(1, -r.top / total)) * (N - 1);
+      var flips = [], done = 0;
+      for (var i = 0; i < N; i++) flips.push(i < N - 1 ? sm((P - i - .14) / .72) : 0);
+      for (var k = 0; k < N; k++) {
+        var f = flips[k], depth = Math.max(0, k - done), el = cards[k];
+        done += f;
+        var dd = Math.min(depth, 3), sc = 1 - dd * .045, ty = dd * (box.clientHeight * .045 + 11);
+        el.style.zIndex = String(N - k);
+        el.style.transform = "translateY(" + ty.toFixed(1) + "px) scale(" + sc.toFixed(3) + ") rotateX(" + (f * 172).toFixed(2) + "deg)";
+        el.style.opacity = f > .62 ? Math.max(0, 1 - (f - .62) / .3).toFixed(3) : "1";
+        el.style.visibility = f >= .999 ? "hidden" : "visible";
+        el.querySelector(".front").style.setProperty("--dim", Math.min(.55, depth * .32).toFixed(3));
+        ticks[k].style.transform = "scaleX(" + (k < N - 1 ? f : sm((P - (N - 1) + .3) / .3)).toFixed(3) + ")";
+      }
+      var a = Math.min(N - 1, Math.floor(P + .5));
+      if (a !== active) { var first = active < 0; active = a; text(first); }
+    }
+    function req() { if (!raf) raf = requestAnimationFrame(update); }
+    addEventListener("scroll", req, { passive: true });
+    addEventListener("resize", req);
+    update();
+    return { text: text, req: req };
+  })();
+  window.__deck = deck;
+
+  var q = new URLSearchParams(location.search).get("lang"), saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  setLang(q || saved || "hy");
+})();
+</script>
+</body>
+</html>

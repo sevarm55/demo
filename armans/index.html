@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Armans Barber Shop · Yerevan</title>
+<meta name="description" content="Armans Barber Shop — սանրվածք, մորուք և խնամք Խորենացի 2-ում, Երևան։ Since 2015.">
+<meta name="theme-color" content="#090807">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+Armenian:wght@400;500;700;800&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="media/before.webp">
+<style>
+:root {
+  --bg: #090807; --ink: #f3ead9; --mute: rgba(243,234,217,.62); --line: rgba(243,234,217,.14);
+  --gold: #d6a85c; --gold2: #f0cf8e;
+  --pad: clamp(16px, 4.4vw, 64px);
+  --fd: "Dela Gothic One", "Noto Sans Armenian", system-ui, sans-serif;
+  --fb: "Onest", "Noto Sans Armenian", system-ui, sans-serif;
+  --fm: "JetBrains Mono", "Noto Sans Armenian", ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--fb); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+html:lang(hy) h1, html:lang(hy) h2, html:lang(hy) .nm { font-family: "Noto Sans Armenian", sans-serif; font-weight: 800; letter-spacing: -.02em; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.kick { margin: 0; font: 600 11px/1.3 var(--fm); letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+h2 { margin: .35em 0 .4em; font: 400 clamp(30px, 5vw, 64px)/1.04 var(--fd); letter-spacing: -.01em; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 50px; padding: 0 22px; border: 0; border-radius: 999px; font: 600 14.5px/1 var(--fb); text-decoration: none; cursor: pointer; transition: transform .2s, background .3s, border-color .3s; }
+.btn:active { transform: scale(.97); }
+.btn-g { background: linear-gradient(180deg, var(--gold2), var(--gold)); color: #1a1209; }
+.btn-o { border: 1px solid var(--line); background: rgba(9,8,7,.45); color: var(--ink); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.btn-o:hover { border-color: rgba(214,168,92,.6); }
+.btn svg { width: 17px; height: 17px; flex: none; }
+
+/* ---------- top ---------- */
+.top { position: absolute; z-index: 8; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: calc(14px + env(safe-area-inset-top)) var(--pad) 0; pointer-events: none; }
+.top > * { pointer-events: auto; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo i { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--gold); font: 400 15px/1 var(--fd); font-style: normal; color: var(--gold); }
+.logo b { display: block; font: 400 16px/1 var(--fd); letter-spacing: .06em; }
+.logo small { display: block; margin-top: 4px; font: 500 9px/1 var(--fm); letter-spacing: .2em; text-transform: uppercase; color: var(--mute); }
+.langs { display: flex; }
+.langs button { padding: 10px 7px; border: 0; background: none; font: 600 11px/1 var(--fm); letter-spacing: .08em; color: var(--mute); cursor: pointer; }
+.langs button[aria-pressed="true"] { color: var(--ink); }
+
+/* ---------- hero: cut him yourself ---------- */
+.hero { position: relative; height: 100svh; min-height: 600px; overflow: hidden; background: var(--bg); }
+.hero-bg { position: absolute; inset: -60px; background: url(media/interior.webp) center / cover; filter: blur(22px) brightness(.3) saturate(1.1); display: none; }
+.stage { position: absolute; inset: 0; }
+.stage img, .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.stage img { object-fit: cover; object-position: 50% 32%; }
+#gl { opacity: 0; transition: opacity .5s; }
+.stage.ready #gl { opacity: 1; }
+#fx { pointer-events: none; }
+.hit { position: absolute; touch-action: none; cursor: none; }
+.hit.free { touch-action: pan-y; cursor: auto; }
+.shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(9,8,7,.6) 0%, rgba(9,8,7,0) 16%, rgba(9,8,7,0) 58%, rgba(9,8,7,.94) 88%); }
+.clipper { position: absolute; left: 0; top: 0; width: 46px; height: 112px; pointer-events: none; transform-origin: 23px 4px; opacity: 0; transition: opacity .25s; z-index: 4; filter: drop-shadow(0 14px 14px rgba(0,0,0,.55)); }
+.clipper.on { opacity: 1; }
+.copy { position: absolute; z-index: 5; left: var(--pad); right: var(--pad); bottom: calc(118px + env(safe-area-inset-bottom)); pointer-events: none; }
+.copy h1 { margin: 8px 0 0; font: 400 clamp(32px, 9.4vw, 46px)/1.02 var(--fd); letter-spacing: -.01em; text-shadow: 0 4px 30px rgba(0,0,0,.6); max-width: 11ch; transition: opacity .4s, transform .4s; }
+.copy h1.swap { opacity: 0; transform: translateY(8px); }
+.hint { display: inline-flex; align-items: center; gap: 9px; margin: 14px 0 0; padding: 8px 12px 8px 10px; border-radius: 999px; background: rgba(9,8,7,.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); font: 600 11px/1.2 var(--fm); letter-spacing: .06em; color: var(--ink); transition: opacity .5s; }
+.hint .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); animation: pulse 1.6s ease-out infinite; }
+.hint.gone { opacity: 0; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(214,168,92,.7); } 100% { box-shadow: 0 0 0 12px rgba(214,168,92,0); } }
+.panel { position: absolute; z-index: 6; left: var(--pad); right: var(--pad); bottom: calc(22px + env(safe-area-inset-bottom)); }
+.meter { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 18px; border: 1px solid var(--line); background: rgba(9,8,7,.62); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font: 600 11px/1 var(--fm); letter-spacing: .1em; text-transform: uppercase; transition: opacity .4s, transform .4s; }
+.bar { position: relative; height: 10px; border-radius: 6px; background: repeating-linear-gradient(90deg, rgba(243,234,217,.12) 0 6px, transparent 6px 9px); overflow: hidden; }
+.bar i { position: absolute; inset: 0; transform-origin: 0 50%; transform: scaleX(0); background: repeating-linear-gradient(90deg, var(--gold2) 0 6px, transparent 6px 9px); transition: transform .25s; }
+.pct { min-width: 4ch; text-align: right; color: var(--gold2); }
+.skip { display: inline-block; margin-top: 10px; padding: 6px 2px; font: 600 11px/1 var(--fm); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); text-decoration: none; }
+.done { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px; border-radius: 22px; border: 1px solid rgba(214,168,92,.35); background: rgba(12,10,8,.82); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); opacity: 0; transform: translateY(24px); pointer-events: none; transition: opacity .6s .2s, transform .6s .2s cubic-bezier(.2,.8,.2,1); }
+.hero.finished .done { opacity: 1; transform: none; pointer-events: auto; }
+.hero.finished .meter, .hero.finished .skip { opacity: 0; transform: translateY(10px); pointer-events: none; }
+.done .score { display: flex; align-items: baseline; gap: 8px; font: 600 12px/1 var(--fm); color: var(--mute); }
+.done .score b { font: 400 26px/1 var(--fd); color: var(--gold2); }
+.done p { margin: 8px 0 14px; color: var(--ink); }
+.done .row { display: flex; flex-wrap: wrap; gap: 8px; }
+.again { background: none; border: 0; padding: 12px 6px; font: 600 12px/1 var(--fm); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); cursor: pointer; }
+
+@media (min-width: 900px) {
+  .hero-bg { display: block; }
+  .stage { left: 50%; right: auto; width: min(100vw, 100svh * .75, 760px); transform: translateX(-50%);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent); mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent); }
+  .shade { background: linear-gradient(180deg, rgba(9,8,7,.5) 0%, rgba(9,8,7,0) 22%, rgba(9,8,7,0) 75%, rgba(9,8,7,.8) 100%); }
+  .copy { top: 50%; bottom: auto; transform: translateY(-50%); right: auto; width: calc(50vw - min(100vw, 100svh * .75, 760px) / 2 + 60px); max-width: 520px; }
+  .copy h1 { font-size: clamp(38px, 3.9vw, 66px); }
+  .panel { left: auto; right: var(--pad); bottom: 50%; transform: translateY(50%); width: min(360px, calc(50vw - min(100vw, 100svh * .75, 760px) / 2 + 40px)); }
+  .done { position: absolute; bottom: auto; top: 50%; transform: translateY(-40%); }
+  .hero.finished .done { transform: translateY(-50%); }
+}
+
+/* ---------- team ---------- */
+.team { position: relative; padding: clamp(80px, 12vw, 160px) var(--pad); overflow: hidden; }
+.team-in { position: relative; display: grid; gap: 40px; max-width: 1240px; margin: 0 auto; }
+.team figure { margin: 0; border-radius: 22px; overflow: hidden; aspect-ratio: 4 / 3; }
+.team figure img { width: 100%; height: 115%; object-fit: cover; display: block; will-change: transform; }
+.barbers { list-style: none; margin: 26px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.barbers li { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 4px 14px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.barbers .idx { font: 600 11px/1 var(--fm); color: var(--gold); }
+.barbers .nm { font: 400 clamp(22px, 3vw, 34px)/1.1 var(--fd); }
+.barbers .role { grid-column: 2; font: 600 11px/1 var(--fm); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.barbers a { grid-column: 3; grid-row: 1 / span 2; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); text-decoration: none; transition: background .3s, border-color .3s, transform .3s; }
+.barbers a:hover { background: var(--gold); border-color: var(--gold); color: #1a1209; transform: rotate(-45deg); }
+.barbers a svg { width: 18px; height: 18px; }
+@media (min-width: 900px) {
+  .team-in { grid-template-columns: 1fr 1fr; align-items: center; gap: 70px; }
+  .team figure { aspect-ratio: 3 / 4; order: 2; }
+}
+
+/* ---------- price: a printed receipt ---------- */
+.bill { position: relative; padding: clamp(70px, 10vw, 140px) var(--pad) clamp(70px, 10vw, 130px); background: radial-gradient(80% 60% at 50% 0%, rgba(214,168,92,.09), transparent 70%); }
+.bill-head { max-width: 1240px; margin: 0 auto 40px; text-align: center; }
+.bill-head p.lead { margin: 0 auto; max-width: 44ch; color: var(--mute); }
+.printer { position: relative; width: min(420px, 100%); margin: 0 auto; }
+.slot { position: relative; z-index: 2; height: 58px; border-radius: 16px 16px 10px 10px; background: linear-gradient(180deg, #2b2724, #151311); box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 20px 40px -20px rgba(0,0,0,.8); }
+.slot::after { content: ""; position: absolute; left: 22px; right: 22px; bottom: 12px; height: 5px; border-radius: 3px; background: #050404; box-shadow: inset 0 2px 3px rgba(0,0,0,.9); }
+.slot .led { position: absolute; top: 14px; right: 20px; width: 7px; height: 7px; border-radius: 50%; background: #3f3a34; }
+.bill.printing .led { background: #7be08b; box-shadow: 0 0 10px #7be08b; animation: blink .5s steps(2) infinite; }
+.slot .brand { position: absolute; top: 12px; left: 22px; font: 600 10px/1 var(--fm); letter-spacing: .2em; color: rgba(243,234,217,.4); }
+@keyframes blink { 50% { opacity: .3; } }
+.feed { position: relative; margin: -12px 30px 0; overflow: hidden; padding-bottom: 30px; }
+.paper { --z: 9px; position: relative; padding: 30px 22px 34px; background: #f6f1e6; color: #1d1915; font: 400 12.5px/1.6 var(--fm); box-shadow: 0 24px 30px -18px rgba(0,0,0,.7);
+  transform: translateY(-100%);
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--z)) 100%; mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--z)) 100%; }
+.bill.printing .paper, .bill.printed .paper { transform: translateY(0); transition: transform 3.4s steps(34, end); }
+.paper .c { text-align: center; }
+.paper .big { font: 400 20px/1.1 var(--fd); letter-spacing: .06em; }
+.paper hr { border: 0; border-top: 1.5px dashed rgba(29,25,21,.45); margin: 12px 0; }
+.paper .ln { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 5px 0; }
+.paper .ln small { grid-column: 1; color: #7a7066; font-size: 11px; }
+.paper .ln b { grid-row: 1 / span 2; grid-column: 2; align-self: center; font-weight: 600; white-space: nowrap; }
+.paper .tot { display: flex; justify-content: space-between; gap: 10px; font-weight: 600; font-size: 13.5px; }
+.paper .bc { height: 40px; margin: 14px auto 6px; width: 78%; background: repeating-linear-gradient(90deg, #1d1915 0 2px, transparent 2px 4px, #1d1915 4px 5px, transparent 5px 8px, #1d1915 8px 11px, transparent 11px 13px, #1d1915 13px 14px, transparent 14px 18px); }
+.bill-cta { display: flex; justify-content: center; margin-top: 8px; }
+
+/* ---------- visit ---------- */
+.visit { position: relative; overflow: hidden; }
+.visit > img { display: block; width: 100%; height: 50svh; object-fit: cover; object-position: 50% 45%; }
+.visit::before { content: ""; position: absolute; z-index: 1; left: 0; right: 0; top: 0; height: 50svh; pointer-events: none; background: linear-gradient(180deg, var(--bg), rgba(9,8,7,0) 22%, rgba(9,8,7,0) 55%, var(--bg)); }
+.v-in { position: relative; z-index: 2; margin-top: -70px; padding: 0 var(--pad) 76px; }
+@media (min-width: 900px) {
+  .visit { min-height: 92svh; display: flex; align-items: flex-end; }
+  .visit > img { position: absolute; inset: 0; height: 100%; }
+  .visit::before { height: auto; bottom: 0; background: linear-gradient(90deg, rgba(9,8,7,.95) 0%, rgba(9,8,7,.78) 42%, rgba(9,8,7,.2) 100%), linear-gradient(180deg, var(--bg), rgba(9,8,7,0) 22%, rgba(9,8,7,0) 75%, var(--bg)); }
+  .v-in { width: 100%; max-width: 1240px; margin: 0 auto; padding: 140px var(--pad) 40px; }
+}
+.v-score { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+.v-score b { font: 400 clamp(52px, 7vw, 86px)/1 var(--fd); color: var(--gold2); }
+.v-score span { color: var(--mute); }
+.facts { list-style: none; margin: 22px 0 26px; padding: 0; display: grid; gap: 6px; font-size: 17px; }
+.facts li::before { content: "— "; color: var(--gold); }
+.v-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--line); font: 500 11px/1.4 var(--fm); letter-spacing: .08em; color: var(--mute); }
+
+.demo { position: fixed; z-index: 30; left: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); max-width: calc(100vw - 24px); padding: 7px 11px; border-radius: 999px; border: 1px solid var(--line); background: rgba(9,8,7,.8); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font: 500 10px/1.2 var(--fm); color: var(--mute); pointer-events: none; opacity: 0; transition: opacity .4s; }
+.demo.on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .paper, .bill.printing .paper { transition: none; } }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero" id="hero" aria-labelledby="h1">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="stage" id="stage">
+      <img id="still" src="media/before.webp" alt="" width="896" height="1200" fetchpriority="high">
+      <canvas id="gl" aria-hidden="true"></canvas>
+      <div class="shade" aria-hidden="true"></div>
+      <canvas id="fx" aria-hidden="true"></canvas>
+      <div class="hit" id="hit" aria-hidden="true"></div>
+      <div class="clipper" id="clipper" aria-hidden="true">
+        <svg viewBox="0 0 46 112" width="46" height="112">
+          <defs>
+            <linearGradient id="st" x1="0" x2="1"><stop offset="0" stop-color="#8b8780"/><stop offset=".5" stop-color="#f6f3ec"/><stop offset="1" stop-color="#7b7770"/></linearGradient>
+            <linearGradient id="bd" x1="0" x2="1"><stop offset="0" stop-color="#151311"/><stop offset=".42" stop-color="#3d3833"/><stop offset="1" stop-color="#0e0d0c"/></linearGradient>
+            <linearGradient id="gd" x1="0" x2="1"><stop offset="0" stop-color="#9a7434"/><stop offset=".5" stop-color="#f3d391"/><stop offset="1" stop-color="#8f6a2f"/></linearGradient>
+            <pattern id="th" width="3" height="7" patternUnits="userSpaceOnUse"><rect width="1.7" height="7" fill="#efece6"/></pattern>
+          </defs>
+          <rect x="5" y="0" width="36" height="7" fill="url(#th)"/>
+          <rect x="4" y="5" width="38" height="9" rx="2" fill="url(#st)"/>
+          <rect x="3" y="12" width="40" height="99" rx="15" fill="url(#bd)"/>
+          <rect x="3" y="38" width="40" height="6" fill="url(#gd)"/>
+          <rect x="18" y="58" width="10" height="20" rx="5" fill="#0b0a09" stroke="url(#gd)" stroke-width="1.5"/>
+          <circle cx="23" cy="64" r="3" fill="url(#gd)"/>
+          <rect x="3" y="96" width="40" height="4" fill="url(#gd)" opacity=".7"/>
+        </svg>
+      </div>
+    </div>
+    <header class="top">
+      <a class="logo" href="#"><i>A</i><span><b>ARMANS</b><small>Barber shop · est. 2015</small></span></a>
+      <div class="langs" role="group" aria-label="Language">
+        <button type="button" data-lang="hy" aria-pressed="true">ՀԱՅ</button>
+        <button type="button" data-lang="ru" aria-pressed="false">РУС</button>
+        <button type="button" data-lang="en" aria-pressed="false">ENG</button>
+      </div>
+    </header>
+    <div class="copy">
+      <p class="kick">Armans Barber Shop · Yerevan</p>
+      <h1 id="h1" data-t="h1"></h1>
+      <p class="hint" id="hint"><span class="dot"></span><span id="hintT"></span></p>
+    </div>
+    <div class="panel">
+      <div class="meter" aria-live="polite"><span data-t="cut"></span><span class="bar"><i id="barI"></i></span><span class="pct" id="pct">0%</span></div>
+      <a class="skip" href="#team" data-t="skip"></a>
+      <div class="done" id="done">
+        <div class="score"><b>4.9</b><span>★★★★★</span><span data-t="reviews"></span></div>
+        <p data-t="done_s"></p>
+        <div class="row">
+          <a class="btn btn-g" href="https://dikidi.ru/1667242" target="_blank" rel="noopener" data-t="book"></a>
+          <button type="button" class="again" id="again" data-t="again"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="team" id="team" aria-labelledby="tH">
+    <div class="team-in">
+      <figure><img id="toolsImg" src="media/tools.webp" alt="" loading="lazy" width="896" height="1200"></figure>
+      <div>
+        <p class="kick" data-t="t_kick"></p>
+        <h2 id="tH" data-t="t_title"></h2>
+        <ol class="barbers" id="barbers"></ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="bill" id="bill" aria-labelledby="pH">
+    <div class="bill-head">
+      <p class="kick" data-t="p_kick"></p>
+      <h2 id="pH" data-t="p_title"></h2>
+      <p class="lead" data-t="p_lead"></p>
+    </div>
+    <div class="printer">
+      <div class="slot"><span class="brand">ARMANS · POS</span><span class="led"></span></div>
+      <div class="feed"><div class="paper" id="paper"></div></div>
+    </div>
+    <div class="bill-cta"><a class="btn btn-g" href="https://dikidi.ru/1667242" target="_blank" rel="noopener" data-t="book"></a></div>
+  </section>
+
+  <section class="visit" aria-labelledby="vH">
+    <img src="media/interior.webp" alt="" loading="lazy" width="1376" height="768">
+    <div class="v-in">
+      <p class="kick">Armans · Yerevan</p>
+      <h2 id="vH" data-t="v_title"></h2>
+      <div class="v-score"><b>4.9</b><span>★★★★★ · </span><span data-t="reviews"></span></div>
+      <ul class="facts"><li data-t="addr"></li><li data-t="hours"></li></ul>
+      <div class="v-row">
+        <a class="btn btn-g" href="https://dikidi.ru/1667242" target="_blank" rel="noopener" data-t="book"></a>
+        <a class="btn btn-o" href="tel:+37499177129"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>099 17 71 29</a>
+        <a class="btn btn-o" href="https://wa.me/37499177129" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn btn-o" href="https://www.instagram.com/barberarman1/" target="_blank" rel="noopener">Instagram</a>
+        <a class="btn btn-o" href="https://www.google.com/maps/search/?api=1&amp;query=Armans+Barber+Shop+Movses+Khorenatsi+2+Yerevan" target="_blank" rel="noopener" data-t="map"></a>
+      </div>
+      <div class="foot"><span>© Armans Barber Shop · est. 2015</span><span data-t="city"></span></div>
+    </div>
+  </section>
+</main>
+<div class="demo" id="demo" data-t="demo"></div>
+
+<script>
+(function () {
+  "use strict";
+  var BOOK = "https://dikidi.ru/1667242";
+  var T = {
+    h1: { hy: "Կտրեք նրա մազերը ինքներդ", ru: "Подстригите его сами", en: "Give him the cut" },
+    hint_m: { hy: "Մկնիկով անցեք մազերի վրայով", ru: "Ведите машинкой по волосам", en: "Run the clipper over his hair" },
+    hint_t: { hy: "Մատով անցեք մազերի վրայով", ru: "Проведите пальцем по волосам", en: "Swipe over his hair" },
+    hint_go: { hy: "Հիմա Ձեր հերթն է", ru: "Теперь ваша очередь", en: "Your turn" },
+    cut: { hy: "Սանրվածք", ru: "Стрижка", en: "Cut" },
+    skip: { hy: "Բաց թողնել ↓", ru: "Пропустить ↓", en: "Skip ↓" },
+    done_h: { hy: "Պատրաստ է։ Այսպես են դուրս գալիս մեզնից", ru: "Готово. Так от нас и выходят", en: "Done. That's how you leave our chair" },
+    done_s: { hy: "Սանրվածք և մորուք՝ 1 ժամ, 10 000 ֏-ից։ Հաջորդը՝ Դուք։", ru: "Стрижка и борода — 1 час, от 10 000 ֏. Следующий — вы.", en: "Haircut and beard: 1 hour, from 10,000 ֏. You're next." },
+    reviews: { hy: "986 կարծիք Google-ում", ru: "986 отзывов в Google", en: "986 reviews on Google" },
+    book: { hy: "Գրանցվել օնլայն", ru: "Записаться онлайн", en: "Book online" },
+    again: { hy: "Կրկին", ru: "Ещё раз", en: "Again" },
+    t_kick: { hy: "Վարպետներ", ru: "Мастера", en: "Barbers" },
+    t_title: { hy: "Չորս բազկաթոռ, չորս վարպետ", ru: "Четыре кресла — четыре мастера", en: "Four chairs, four barbers" },
+    p_kick: { hy: "Գներ", ru: "Цены", en: "Prices" },
+    p_title: { hy: "Ազնիվ գներ՝ առանց անակնկալների", ru: "Честные цены без сюрпризов", en: "Honest prices, no surprises" },
+    p_lead: { hy: "Նույն գները, ինչ օնլայն գրանցման մեջ։ Վճարում եք միայն այն, ինչ ընտրել եք։", ru: "Те же цены, что в онлайн-записи. Платите только за то, что выбрали.", en: "The same prices as in online booking. You pay only for what you choose." },
+    v_title: { hy: "Խորենացի 2՝ հենց կենտրոնում", ru: "Хоренаци 2 — в самом центре", en: "2 Khorenatsi St, right downtown" },
+    addr: { hy: "Մովսես Խորենացի 2, Կենտրոն", ru: "Мовсеса Хоренаци 2, Кентрон", en: "2 Movses Khorenatsi St, Kentron" },
+    hours: { hy: "Ամեն օր 10:00–21:00", ru: "Ежедневно 10:00–21:00", en: "Every day 10:00–21:00" },
+    map: { hy: "Քարտեզ", ru: "Карта", en: "Map" },
+    city: { hy: "Երևան, Հայաստան", ru: "Ереван, Армения", en: "Yerevan, Armenia" },
+    demo: { hy: "Դեմո՝ Armans-ի համար · լուսանկարները օրինակ են", ru: "Демо для Armans · фото — пример", en: "Demo for Armans · sample photos" },
+    r_no: { hy: "ԿՏՐՈՆ", ru: "ЧЕК", en: "RECEIPT" },
+    r_total: { hy: "ԸՆԴԱՄԵՆԸ", ru: "ИТОГО", en: "TOTAL" },
+    r_val: { hy: "թարմ տեսք", ru: "свежий вид", en: "a fresh look" },
+    r_thx: { hy: "Շնորհակալություն։ Սպասում ենք կրկին", ru: "Спасибо! Ждём снова", en: "Thank you! See you again" }
+  };
+  var BARBERS = [
+    [{ hy: "Արման Առաքելյան", ru: "Арман Аракелян", en: "Arman Araqelyan" }, "Chef barber"],
+    [{ hy: "Մանվել Առաքելյան", ru: "Манвел Аракелян", en: "Manvel Araqelyan" }, "Top barber"],
+    [{ hy: "Արտյոմ Հովսեփյան", ru: "Артём Овсепян", en: "Artyom Hovsepyan" }, "Barber"],
+    [{ hy: "Սամվել Ղուկասյան", ru: "Самвел Гукасян", en: "Samvel Ghukasyan" }, "Junior barber"]
+  ];
+  // real services and prices from their online booking page
+  var SERV = [
+    [{ hy: "Սանրվածք", ru: "Стрижка", en: "Haircut" }, 40, 6000],
+    [{ hy: "Մորուքի ձևավորում", ru: "Моделирование бороды", en: "Beard trim" }, 30, 4000],
+    [{ hy: "Սանրվածք + մորուք", ru: "Стрижка + борода", en: "Haircut + beard" }, 60, 10000],
+    [{ hy: "Պրեմիում սանրվածք", ru: "Премиальная стрижка", en: "Premium combo cut" }, 90, 20000],
+    [{ hy: "Դեմքի խնամք", ru: "Уход за лицом", en: "Face mask" }, 60, 10000],
+    [{ hy: "Մազերի կերատին", ru: "Кератин для волос", en: "Hair keratin" }, 120, 15000],
+    [{ hy: "Գանգրացում", ru: "Химзавивка", en: "Hair perm" }, 120, 20000],
+    [{ hy: "Մոմով մազահեռացում", ru: "Удаление воском", en: "Waxing" }, 10, 1000]
+  ];
+  var $ = function (s) { return document.querySelector(s); };
+  var lang = "hy", reduce = matchMedia("(prefers-reduced-motion: reduce)").matches, touchy = matchMedia("(hover: none)").matches;
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function num(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, lang === "en" ? "," : " ") + " ֏"; }
+  function from(n) { return lang === "hy" ? num(n) + "-ից" : lang === "ru" ? "от " + num(n) : "from " + num(n); }
+  function dur(m) {
+    var h = Math.floor(m / 60), r = m % 60, U = { hy: ["ժ", "ր"], ru: ["ч", "мин"], en: ["h", "min"] }[lang];
+    return (h ? h + " " + U[0] : "") + (h && r ? " " : "") + (r ? r + " " + U[1] : "");
+  }
+  var hintKey = "hint_" + (touchy ? "t" : "m"), stage_ = "idle";
+
+  function render() {
+    var arrow = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M5 12h13M13 6l6 6-6 6"/></svg>';
+    $("#barbers").innerHTML = BARBERS.map(function (b, i) {
+      return '<li><span class="idx">0' + (i + 1) + '</span><span class="nm">' + esc(b[0][lang]) + '</span><span class="role">' + b[1] + '</span><a href="' + BOOK + '" target="_blank" rel="noopener" aria-label="' + esc(T.book[lang] + " · " + b[0][lang]) + '">' + arrow + "</a></li>";
+    }).join("");
+    var d = new Date(), date = ("0" + d.getDate()).slice(-2) + "." + ("0" + (d.getMonth() + 1)).slice(-2) + "." + d.getFullYear();
+    $("#paper").innerHTML =
+      '<div class="c big">ARMANS</div><div class="c">BARBER SHOP · EST. 2015</div><div class="c">' + esc(T.addr[lang]) + '</div><hr>' +
+      '<div class="tot"><span>' + T.r_no[lang] + ' № 0986</span><span>' + date + '</span></div><hr>' +
+      SERV.map(function (s) { return '<div class="ln"><span>' + esc(s[0][lang]) + "</span><small>" + dur(s[1]) + "</small><b>" + from(s[2]) + "</b></div>"; }).join("") +
+      '<hr><div class="tot"><span>' + T.r_total[lang] + ':</span><span>' + esc(T.r_val[lang]) + '</span></div><hr>' +
+      '<div class="c">★★★★★ 4.9 · ' + esc(T.reviews[lang]) + '</div><div class="bc"></div><div class="c">' + esc(T.r_thx[lang]) + "</div>";
+  }
+  function setLang(l) {
+    lang = ["hy", "ru", "en"].indexOf(l) >= 0 ? l : "hy";
+    document.documentElement.lang = lang;
+    [].forEach.call(document.querySelectorAll("[data-t]"), function (e) { e.textContent = T[e.dataset.t][lang]; });
+    [].forEach.call(document.querySelectorAll("[data-lang]"), function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === lang)); });
+    $("#h1").textContent = (stage_ === "done" ? T.done_h : T.h1)[lang];
+    $("#hintT").textContent = T[stage_ === "yours" ? "hint_go" : hintKey][lang];
+    render();
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+  }
+  [].forEach.call(document.querySelectorAll("[data-lang]"), function (b) { b.addEventListener("click", function () { setLang(b.dataset.lang); }); });
+
+  /* =========================================================
+     The game: shave the overgrown hair, reveal the fresh cut
+     ========================================================= */
+  var hero = $("#hero"), stage = $("#stage"), cv = $("#gl"), fx = $("#fx"), fctx = fx.getContext("2d"), clip = $("#clipper"), hit = $("#hit");
+  var gl = null;
+  try { gl = cv.getContext("webgl", { alpha: false, antialias: false, premultipliedAlpha: false }); } catch (e) {}
+  var CW = 224, CH = 300, GW = 56, GH = 75, BR = 0.052;        // cut map size, hair grid, brush radius (image widths)
+  var C = document.createElement("canvas"); C.width = CW; C.height = CH;
+  var cc = C.getContext("2d");
+  var rem = new Float32Array(GW * GH), mask0 = new Float32Array(GW * GH), colr = new Uint8ClampedArray(GW * GH * 3), maskSum = 1;
+  var bbox = [0.2, 0.1, 0.8, 0.75];
+  var W = 1, H = 1, crop = [0, 0, 1, 1], IA = 896 / 1200, D = 1;
+  var U = {}, TB, TA, TM, TC, ready = false, dirty = true, raf = 0;
+  var done = 0, doneT = 0, finished = false, prog = 0, interacted = false;
+  var parts = [];
+
+  function clearCut() { cc.globalCompositeOperation = "source-over"; cc.fillStyle = "#000"; cc.fillRect(0, 0, CW, CH); }
+  clearCut();
+
+  if (gl) {
+    var VS = "attribute vec2 p;varying vec2 v;void main(){v=p*.5+.5;gl_Position=vec4(p,0.,1.);}";
+    var FS = [
+      "precision mediump float;varying vec2 v;",
+      "uniform sampler2D B,A,M,K;uniform float done;uniform vec4 crop;",
+      "void main(){",
+      " vec2 uv=crop.xy+vec2(v.x,1.-v.y)*crop.zw;",
+      " vec3 b=texture2D(B,uv).rgb,a=texture2D(A,uv).rgb;",
+      " float m=texture2D(M,uv).r, c=texture2D(K,uv).r;",
+      " float k=clamp(c*smoothstep(.04,.45,m)+done,0.,1.);",
+      " vec3 col=mix(b,a,k);",
+      " float edge=smoothstep(.12,.5,c)*(1.-smoothstep(.5,.92,c))*m*(1.-done);",
+      " col+=edge*vec3(.10,.08,.05);",
+      " gl_FragColor=vec4(col,1.);",
+      "}"].join("\n");
+    var ok = (function () {
+      function sh(t, s) { var o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null; }
+      var vs = sh(gl.VERTEX_SHADER, VS), fs = sh(gl.FRAGMENT_SHADER, FS); if (!vs || !fs) return false;
+      var pr = gl.createProgram(); gl.attachShader(pr, vs); gl.attachShader(pr, fs); gl.linkProgram(pr);
+      if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return false;
+      gl.useProgram(pr);
+      var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+      var loc = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      ["B", "A", "M", "K", "done", "crop"].forEach(function (k) { U[k] = gl.getUniformLocation(pr, k); });
+      gl.uniform1i(U.B, 0); gl.uniform1i(U.A, 1); gl.uniform1i(U.M, 2); gl.uniform1i(U.K, 3);
+      return true;
+    })();
+    if (!ok) gl = null;
+  }
+  function tex(unit, src) {
+    var t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, src);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    return t;
+  }
+  function loadImg(src) { return new Promise(function (ok, no) { var im = new Image(); im.onload = function () { ok(im); }; im.onerror = no; im.src = src; }); }
+
+  function size() {
+    var r = stage.getBoundingClientRect();
+    W = Math.max(1, r.width); H = Math.max(1, r.height); D = Math.min(devicePixelRatio || 1, 2);
+    var ca = W / H, sx = 1, sy = 1;
+    if (ca > IA) sy = IA / ca; else sx = ca / IA;
+    crop = [Math.min(Math.max(.5 - sx / 2, 0), 1 - sx), Math.min(Math.max(.34 - sy / 2, 0), 1 - sy), sx, sy];
+    fx.width = Math.round(W * D); fx.height = Math.round(H * D); fctx.setTransform(D, 0, 0, D, 0, 0);
+    if (gl) {
+      var q = Math.min(D, 1.75); cv.width = Math.round(W * q); cv.height = Math.round(H * q);
+      gl.viewport(0, 0, cv.width, cv.height); gl.uniform4f(U.crop, crop[0], crop[1], crop[2], crop[3]);
+    }
+    var a = toCss(bbox[0], bbox[1]), b = toCss(bbox[2], bbox[3]);
+    var x0 = Math.max(0, a[0]), y0 = Math.max(0, a[1]), x1 = Math.min(W, b[0]), y1 = Math.min(H, b[1]);
+    hit.style.left = x0 + "px"; hit.style.top = y0 + "px"; hit.style.width = (x1 - x0) + "px"; hit.style.height = (y1 - y0) + "px";
+    dirty = true; kick();
+  }
+  function toImg(x, y) { return [crop[0] + x / W * crop[2], crop[1] + y / H * crop[3]]; }
+  function toCss(u, v) { return [(u - crop[0]) / crop[2] * W, (v - crop[1]) / crop[3] * H]; }
+
+  /* hair grid from the mask, colours from the "before" photo */
+  function prepGrid(maskIm, beforeIm) {
+    var g = document.createElement("canvas"); g.width = GW; g.height = GH; var gx = g.getContext("2d", { willReadFrequently: true });
+    gx.drawImage(maskIm, 0, 0, GW, GH); var md = gx.getImageData(0, 0, GW, GH).data;
+    gx.drawImage(beforeIm, 0, 0, GW, GH); var bd = gx.getImageData(0, 0, GW, GH).data;
+    var s = 0, mnx = 1, mny = 1, mxx = 0, mxy = 0;
+    for (var i = 0; i < GW * GH; i++) {
+      var m = md[i * 4] / 255; m = m < .25 ? 0 : m;
+      mask0[i] = m; rem[i] = m; s += m;
+      colr[i * 3] = bd[i * 4]; colr[i * 3 + 1] = bd[i * 4 + 1]; colr[i * 3 + 2] = bd[i * 4 + 2];
+      if (m > .5) { var x = (i % GW) / GW, y = Math.floor(i / GW) / GH; mnx = Math.min(mnx, x); mny = Math.min(mny, y); mxx = Math.max(mxx, x); mxy = Math.max(mxy, y); }
+    }
+    maskSum = s || 1;
+    bbox = [Math.max(0, mnx - .05), Math.max(0, mny - .05), Math.min(1, mxx + .06), Math.min(1, mxy + .05)];
+  }
+
+  /* one stroke of the clipper from the last point to (x,y) in stage CSS px */
+  var last = null, lastCss = null, lastVib = 0, angle = 0;
+  function cutTo(x, y) {
+    if (finished) return;
+    var p = toImg(x, y), px = p[0] * CW, py = p[1] * CH;
+    cc.strokeStyle = "#fff"; cc.lineCap = "round"; cc.lineJoin = "round"; cc.lineWidth = BR * 2 * CW;
+    cc.beginPath(); cc.moveTo(last ? last[0] : px, last ? last[1] : py); cc.lineTo(px + .01, py); cc.stroke();
+    // walk the hair grid along the segment, drop clippings where hair was
+    var g1 = [p[0] * GW, p[1] * GH], g0 = last ? [last[0] / CW * GW, last[1] / CH * GH] : g1;
+    var dist = Math.hypot(g1[0] - g0[0], g1[1] - g0[1]), steps = Math.max(1, Math.ceil(dist / .8)), rad = BR * GW, removed = 0;
+    var dx = lastCss ? x - lastCss[0] : 0, dy = lastCss ? y - lastCss[1] : 0;
+    for (var s = 0; s <= steps; s++) {
+      var cx = g0[0] + (g1[0] - g0[0]) * s / steps, cy = g0[1] + (g1[1] - g0[1]) * s / steps;
+      for (var j = Math.max(0, Math.floor(cy - rad)); j <= Math.min(GH - 1, Math.ceil(cy + rad)); j++) {
+        for (var i = Math.max(0, Math.floor(cx - rad)); i <= Math.min(GW - 1, Math.ceil(cx + rad)); i++) {
+          var k = j * GW + i, r0 = rem[k];
+          if (r0 > 0 && (i + .5 - cx) * (i + .5 - cx) + (j + .5 - cy) * (j + .5 - cy) <= rad * rad) {
+            rem[k] = 0; removed += r0;
+            spawn(i, j, r0, dx, dy);
+          }
+        }
+      }
+    }
+    last = [px, py]; lastCss = [x, y];
+    if (removed > 0) {
+      prog = 1 - sum() / maskSum;
+      meter(prog);
+      var now = performance.now();
+      if (navigator.vibrate && now - lastVib > 70 && interacted) { try { navigator.vibrate(7); } catch (e) {} lastVib = now; }
+      if (prog >= .72 && interacted) finish();
+    }
+    dirty = true; kick();
+  }
+  function sum() { var s = 0; for (var i = 0; i < rem.length; i++) s += rem[i]; return s; }
+  function spawn(i, j, amt, dx, dy) {
+    if (reduce) return;
+    var n = Math.round(amt * (touchy ? 3 : 4));
+    var c = toCss((i + .5) / GW, (j + .5) / GH), k = (j * GW + i) * 3;
+    for (var q = 0; q < n && parts.length < 900; q++) {
+      var sh = .75 + Math.random() * .6;
+      parts.push({
+        x: c[0] + (Math.random() - .5) * 10, y: c[1] + (Math.random() - .5) * 10,
+        vx: (Math.random() - .5) * 3.2 + dx * .06, vy: -Math.random() * 2.6 - .4 + dy * .03,
+        a: Math.random() * 6.28, va: (Math.random() - .5) * .35, len: 3 + Math.random() * 8, life: 1,
+        r: Math.min(255, colr[k] * sh + 10) | 0, g: Math.min(255, colr[k + 1] * sh + 8) | 0, b: Math.min(255, colr[k + 2] * sh + 6) | 0, w: .8 + Math.random() * .9
+      });
+    }
+  }
+  function meter(p) {
+    var v = Math.min(1, p / .72);
+    $("#barI").style.transform = "scaleX(" + v.toFixed(3) + ")";
+    $("#pct").textContent = Math.round(v * 100) + "%";
+  }
+  function finish() {
+    if (finished) return;
+    finished = true; doneT = performance.now(); stage_ = "done";
+    // everything that is left falls off at once
+    for (var j = 0; j < GH; j++) for (var i = 0; i < GW; i++) { var k = j * GW + i; if (rem[k] > .3 && Math.random() < .55) spawn(i, j, rem[k] * .8, 0, 0); rem[k] = 0; }
+    meter(.72);
+    hit.classList.add("free"); clip.classList.remove("on");
+    var h = $("#h1"); h.classList.add("swap");
+    setTimeout(function () { h.textContent = T.done_h[lang]; h.classList.remove("swap"); hero.classList.add("finished"); }, 500);
+    $("#hint").classList.add("gone");
+    kick();
+  }
+  function reset() {
+    clearCut(); for (var i = 0; i < rem.length; i++) rem[i] = mask0[i];
+    finished = false; done = 0; prog = 0; last = null; lastCss = null; stage_ = "yours"; meter(0);
+    hero.classList.remove("finished"); hit.classList.remove("free");
+    $("#h1").textContent = T.h1[lang]; $("#hintT").textContent = T.hint_go[lang]; $("#hint").classList.remove("gone");
+    dirty = true; kick();
+  }
+  $("#again").addEventListener("click", reset);
+
+  function frame(now) {
+    raf = 0;
+    if (finished && done < 1) { done = Math.min(1, (now - doneT) / 900); done = done * done * (3 - 2 * done); dirty = true; }
+    if (gl && ready && dirty) {
+      gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, TC);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, C);
+      gl.uniform1f(U.done, done);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      dirty = false;
+      if (!stage.classList.contains("ready")) stage.classList.add("ready");
+    }
+    // falling clippings
+    fctx.clearRect(0, 0, W, H);
+    for (var i = parts.length - 1; i >= 0; i--) {
+      var p = parts[i];
+      p.vy += .2; p.vx *= .985; p.x += p.vx; p.y += p.vy; p.a += p.va; p.life -= .006;
+      if (p.y > H + 20 || p.life <= 0) { parts[i] = parts[parts.length - 1]; parts.pop(); continue; }
+      var ca = Math.cos(p.a) * p.len, sa = Math.sin(p.a) * p.len;
+      fctx.strokeStyle = "rgba(" + p.r + "," + p.g + "," + p.b + "," + Math.min(1, p.life * 1.4).toFixed(2) + ")";
+      fctx.lineWidth = p.w;
+      fctx.beginPath(); fctx.moveTo(p.x, p.y); fctx.quadraticCurveTo(p.x + ca * .5 - sa * .25, p.y + sa * .5 + ca * .25, p.x + ca, p.y + sa); fctx.stroke();
+    }
+    if (parts.length || dirty || (finished && done < 1) || ghostOn) kick();
+  }
+  function kick() { if (!raf) raf = requestAnimationFrame(frame); }
+
+  /* the clipper that follows your hand */
+  function moveClipper(x, y, show) {
+    if (lastCss) {
+      var dx = x - lastCss[0], dy = y - lastCss[1];
+      if (dx * dx + dy * dy > 4) { var t = Math.atan2(dy, dx) + Math.PI / 2, d = t - angle; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; angle += d * .25; }
+    }
+    var lim = 1.1; angle = Math.max(-lim, Math.min(lim, angle));
+    clip.style.transform = "translate(" + (x - 23) + "px," + (y - 4) + "px) rotate(" + angle.toFixed(3) + "rad)";
+    clip.classList.toggle("on", !!show);
+  }
+  function local(e) { var r = stage.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+  var down = false, OFF = 34;
+  function firstTouch() {
+    if (!interacted) { interacted = true; stopGhost(); if (stage_ !== "done") { stage_ = "cutting"; $("#hint").classList.add("gone"); } }
+  }
+  hit.addEventListener("pointerdown", function (e) {
+    if (finished) return;
+    firstTouch(); down = true; last = null; lastCss = null;
+    try { hit.setPointerCapture(e.pointerId); } catch (er) {}
+    var p = local(e), y = e.pointerType === "mouse" ? p[1] : p[1] - OFF;
+    moveClipper(p[0], y, true); cutTo(p[0], y);
+  });
+  hit.addEventListener("pointermove", function (e) {
+    if (finished) return;
+    var p = local(e), mouse = e.pointerType === "mouse", y = mouse ? p[1] : p[1] - OFF;
+    if (mouse || down) {
+      moveClipper(p[0], y, true);
+      if (mouse && !down && !interacted) firstTouch();
+      cutTo(p[0], y);
+    }
+  });
+  function up() { down = false; last = null; lastCss = null; if (touchy) clip.classList.remove("on"); }
+  hit.addEventListener("pointerup", up); hit.addEventListener("pointercancel", up);
+  hit.addEventListener("pointerleave", function () { last = null; lastCss = null; if (!down) clip.classList.remove("on"); });
+
+  /* a ghost pass shows how it works, then hands over */
+  var ghostOn = false, ghostT = 0, ghostTimer = 0;
+  var GP = [[.25, .5], [.255, .4], [.27, .3], [.31, .22], [.37, .17], [.45, .14], [.36, .24], [.3, .33], [.29, .44]];
+  function ghost(now) {
+    if (!ghostOn) return;
+    var t = Math.min(1, (now - ghostT) / 1700), seg = t * (GP.length - 1), i = Math.min(GP.length - 2, Math.floor(seg)), f = seg - i;
+    var u = GP[i][0] + (GP[i + 1][0] - GP[i][0]) * f, v = GP[i][1] + (GP[i + 1][1] - GP[i][1]) * f, c = toCss(u, v);
+    moveClipper(c[0], c[1], true); cutTo(c[0], c[1]);
+    if (t < 1) requestAnimationFrame(ghost);
+    else { ghostOn = false; last = null; lastCss = null; setTimeout(function () { if (!interacted) clip.classList.remove("on"); }, 300); stage_ = "yours"; if (!interacted) $("#hintT").textContent = T.hint_go[lang]; }
+  }
+  function startGhost() { if (interacted || reduce || finished) return; ghostOn = true; ghostT = performance.now(); last = null; lastCss = null; requestAnimationFrame(ghost); }
+  function stopGhost() { clearTimeout(ghostTimer); if (ghostOn) { ghostOn = false; last = null; lastCss = null; } }
+
+  if (gl) {
+    Promise.all([loadImg("media/before.webp"), loadImg("media/after.webp"), loadImg("media/mask.webp")]).then(function (im) {
+      TB = tex(0, im[0]); TA = tex(1, im[1]); TM = tex(2, im[2]); TC = tex(3, C);
+      prepGrid(im[2], im[0]);
+      ready = true; size();
+      ghostTimer = setTimeout(startGhost, 1500);
+    }).catch(function () { gl = null; fallback(); });
+  } else fallback();
+  function fallback() {
+    // no WebGL: show the finished cut and the booking card
+    $("#still").src = "media/after.webp"; finished = true; stage_ = "done"; hero.classList.add("finished");
+    $("#h1").textContent = T.done_h[lang]; $("#hint").classList.add("gone"); hit.classList.add("free");
+  }
+  addEventListener("resize", function () { clearTimeout(size.t); size.t = setTimeout(size, 100); });
+  size();
+
+  /* ---------- team image drifts a little ---------- */
+  var toolsImg = $("#toolsImg"), demo = $("#demo");
+  function onScroll() {
+    var r = toolsImg.parentNode.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < innerHeight) toolsImg.style.transform = "translateY(" + (-(r.top + r.height / 2 - innerHeight / 2) * .08 - r.height * .07).toFixed(1) + "px)";
+    demo.classList.toggle("on", scrollY > innerHeight * .5);
+  }
+  addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+  /* ---------- the receipt prints when it comes into view ---------- */
+  var bill = $("#bill");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (en) {
+      if (en[0].isIntersecting) { bill.classList.add("printing"); setTimeout(function () { bill.classList.remove("printing"); bill.classList.add("printed"); }, 3500); io.disconnect(); }
+    }, { threshold: .35 });
+    io.observe(bill);
+  } else bill.classList.add("printed");
+
+  var q = new URLSearchParams(location.search).get("lang"), saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  setLang(q || saved || "hy");
+})();
+</script>
+</body>
+</html>

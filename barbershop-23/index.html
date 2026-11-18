@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Barbershop 23 by Asatur</title>
+<meta name="description" content="Barbershop 23 — Թումանյան 23, Երևան">
+<meta property="og:title" content="Barbershop 23 by Asatur">
+<meta property="og:image" content="media/hero.webp">
+<meta name="theme-color" content="#0F0D0C">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@900&family=Unbounded:wght@200..800&family=Noto+Sans+Armenian:wght@200..800&display=swap">
+<link rel="preload" as="image" href="frames/l/f001.webp" media="(min-width: 761px)">
+<link rel="preload" as="image" href="frames/s/f001.webp" media="(max-width: 760px)">
+<style>
+:root {
+  --ink: #0F0D0C; --bone: #F3ECE6; --tuff: #D6AC98; --amber: #F4A852; --muted: rgba(243,236,230,.62);
+  --font: "Unbounded", "Noto Sans Armenian", system-ui, sans-serif;
+  --pad: clamp(16px, 4vw, 48px);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ink); color: var(--bone); font-family: var(--font); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+a { color: inherit; }
+svg.i { width: 1.15em; height: 1.15em; fill: currentColor; flex: none; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+/* top bar: dark over the stone, light over the film */
+.top { position: fixed; z-index: 20; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px var(--pad); font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--bone); transition: color .4s; pointer-events: none; }
+.top > * { pointer-events: auto; }
+.top.on-stone { color: var(--ink); }
+.top.solid { background: rgba(15,13,12,.86); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.brand { font-weight: 700; white-space: nowrap; text-decoration: none; }
+.langs button { font: inherit; letter-spacing: .1em; background: none; border: 0; color: inherit; opacity: .45; cursor: pointer; padding: 8px 6px; }
+.langs button[aria-pressed="true"] { opacity: 1; }
+
+/* ---------- the film: fly through "23", then scroll-scrubbed footage with titles ---------- */
+.film { height: 760vh; position: relative; }
+.stage { position: sticky; top: 0; height: 100svh; overflow: hidden; background: var(--ink); }
+canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.shade { position: absolute; inset: 0; opacity: 0; background: radial-gradient(120% 90% at 50% 50%, rgba(15,13,12,.3) 30%, rgba(15,13,12,.75) 100%); }
+.veil { position: absolute; inset: 0; width: 100%; height: 100%; }
+.grain { position: absolute; inset: -50%; pointer-events: none; opacity: .1; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.intro { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 var(--pad) calc(22px + env(safe-area-inset-bottom)); color: var(--ink); font-size: clamp(.7rem, 1vw, .8rem); letter-spacing: .16em; text-transform: uppercase; font-weight: 600; }
+.cue { display: inline-flex; align-items: center; gap: 10px; }
+.cue::after { content: ""; width: 1px; height: 34px; background: currentColor; animation: cue 2s ease-in-out infinite; transform-origin: top; }
+@keyframes cue { 0% { transform: scaleY(0); } 60% { transform: scaleY(1); opacity: 1; } 100% { opacity: 0; } }
+
+.credit { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; padding: 0 20px; opacity: 0; pointer-events: none; }
+.credit .k { font-size: clamp(.66rem, 1vw, .78rem); letter-spacing: .32em; text-transform: uppercase; opacity: .75; margin: 0 0 18px; }
+.credit h2 { margin: 0; font-weight: 200; line-height: .95; letter-spacing: -.02em; }
+.credit h2 b { font-weight: 800; }
+.c1 h2 { font-size: clamp(2.6rem, 9vw, 9.5rem); }
+.c2 h2 { font-size: clamp(2.4rem, 7.5vw, 7.5rem); }
+.c2 h2 b, .c3 h2 b { color: var(--amber); }
+.c3 h2 { font-size: clamp(5rem, 18vw, 17rem); line-height: .85; }
+.credit .sub { margin: 18px auto 0; font-size: clamp(.95rem, 1.4vw, 1.15rem); font-weight: 300; max-width: 34ch; line-height: 1.5; opacity: .85; }
+.progress { position: absolute; left: var(--pad); right: var(--pad); bottom: 22px; height: 1px; background: rgba(243,236,230,.18); opacity: 0; }
+.progress i { position: absolute; inset: 0; background: var(--bone); transform-origin: left; transform: scaleX(0); }
+
+/* ---------- prices as end credits ---------- */
+.roll { position: relative; }
+.roll-view { position: sticky; top: 0; height: 100svh; overflow: hidden;
+  -webkit-mask-image: linear-gradient(transparent 0, #000 18%, #000 82%, transparent 100%); mask-image: linear-gradient(transparent 0, #000 18%, #000 82%, transparent 100%); }
+.roll-list { position: absolute; left: 0; right: 0; top: 0; padding: 0 var(--pad); will-change: transform; }
+.roll-head { text-align: center; margin: 0 0 clamp(40px, 7vh, 72px); }
+.roll-head .k { font-size: clamp(.66rem, 1vw, .78rem); letter-spacing: .32em; text-transform: uppercase; opacity: .7; margin: 0 0 14px; }
+.roll-head h2 { margin: 0; font-weight: 200; font-size: clamp(2.2rem, 6vw, 5.4rem); letter-spacing: -.02em; line-height: 1; }
+.dept { text-align: center; font-size: clamp(.62rem, .9vw, .74rem); letter-spacing: .34em; text-transform: uppercase; color: var(--amber); margin: clamp(36px, 6vh, 60px) 0 14px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(16px, 3vw, 40px); align-items: baseline; padding: 9px 0; max-width: 980px; margin: 0 auto; }
+.row .s { text-align: right; font-weight: 300; font-size: clamp(1.02rem, 2.3vw, 1.75rem); line-height: 1.2; }
+.row .s small { display: block; font-size: .56em; opacity: .6; margin-top: 4px; letter-spacing: .02em; }
+.row .p { font-weight: 700; font-size: clamp(1.02rem, 2.3vw, 1.75rem); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.finale { text-align: center; padding: clamp(80px, 16vh, 160px) 0 0; }
+.finale h3 { margin: 0 auto 28px; font-weight: 200; font-size: clamp(2.2rem, 6.4vw, 6rem); line-height: 1; letter-spacing: -.02em; max-width: 14ch; }
+.finale h3 b { font-weight: 800; }
+.btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.btn { display: inline-flex; align-items: center; gap: .6em; min-height: 56px; padding: .9em 1.7em; border-radius: 999px; font-family: "Noto Sans Armenian", system-ui, sans-serif; font-weight: 600; font-size: 1.02rem; text-decoration: none; transition: transform .25s; }
+.btn:hover { transform: translateY(-2px); }
+.btn-a { background: var(--amber); color: var(--ink); }
+.btn-g { border: 1px solid rgba(243,236,230,.45); background: rgba(243,236,230,.07); }
+.note { margin: 22px 0 0; font-size: .78rem; opacity: .55; letter-spacing: .04em; }
+
+/* ---------- contacts on pink tuff ---------- */
+.info { background: var(--tuff); color: var(--ink); padding: clamp(56px, 9vw, 110px) var(--pad) clamp(40px, 6vw, 70px); }
+.info-grid { display: grid; gap: 30px; }
+@media (min-width: 900px) { .info-grid { grid-template-columns: 1.3fr 1fr 1fr 1fr; align-items: end; } }
+.info .num { font-family: "Sofia Sans Extra Condensed", sans-serif; font-weight: 900; font-size: clamp(7rem, 20vw, 16rem); line-height: .78; letter-spacing: -.02em; }
+.info h3 { margin: 0 0 8px; font-size: .66rem; letter-spacing: .26em; text-transform: uppercase; font-weight: 600; opacity: .65; }
+.info p, .info a.v { margin: 0; font-size: clamp(1.05rem, 1.6vw, 1.3rem); font-weight: 400; line-height: 1.35; text-decoration: none; }
+.info .map-link { display: inline-flex; gap: .4em; align-items: center; margin-top: 8px; font-size: .85rem; font-weight: 600; text-underline-offset: 4px; }
+.foot { margin-top: clamp(40px, 6vw, 70px); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; font-size: .7rem; letter-spacing: .08em; opacity: .7; }
+
+/* floating call button after the intro */
+.fab { position: fixed; z-index: 25; right: var(--pad); bottom: calc(18px + env(safe-area-inset-bottom)); width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: var(--amber); color: var(--ink); box-shadow: 0 10px 30px rgba(0,0,0,.35); transform: scale(0); transition: transform .4s cubic-bezier(.2,.8,.2,1.2); }
+.fab.show { transform: scale(1); }
+.fab svg { width: 24px; height: 24px; }
+.demo { position: fixed; z-index: 30; left: 50%; top: 52px; transform: translateX(-50%); background: rgba(15,13,12,.72); color: var(--bone); font-family: "Noto Sans Armenian", system-ui, sans-serif; font-size: .66rem; padding: 5px 12px; border-radius: 999px; white-space: nowrap; }
+@media (max-width: 760px) { .top { letter-spacing: .1em; } }
+@media (prefers-reduced-motion: reduce) { .cue::after { animation: none; } .btn, .fab { transition: none; } }
+</style>
+</head>
+<body>
+<header class="top on-stone" id="top">
+  <a class="brand" href="#">Barbershop 23</a>
+  <span class="langs" role="group" aria-label="Language"><button data-lang="hy" aria-pressed="true">Հայ</button><button data-lang="ru" aria-pressed="false">Рус</button><button data-lang="en" aria-pressed="false">Eng</button></span>
+</header>
+
+<main>
+  <section class="film" id="film" aria-label="Barbershop 23">
+    <div class="stage">
+      <canvas id="cv" aria-hidden="true"></canvas>
+      <div class="shade" id="shade"></div>
+      <svg class="veil" id="veil" aria-hidden="true">
+        <defs><mask id="m" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="100%" height="100%" fill="#fff"/><text id="t23" text-anchor="middle" font-family="Sofia Sans Extra Condensed" font-weight="900" fill="#000">23</text></mask></defs>
+        <rect id="veilRect" x="0" y="0" width="100%" height="100%" fill="#D6AC98" mask="url(#m)"/>
+      </svg>
+      <div class="grain" id="grain"></div>
+      <div class="intro" id="intro"><span data-t="addr"></span><span class="cue" data-t="scroll"></span></div>
+      <div class="credit c1" data-from=".22" data-to=".42"><p class="k" data-t="k1"></p><h2><b>Barbershop</b> 23</h2><p class="sub">by Asatur</p></div>
+      <div class="credit c2" data-from=".46" data-to=".66"><p class="k" data-t="k2"></p><h2 data-h="street"></h2><p class="sub" data-t="s2"></p></div>
+      <div class="credit c3" data-from=".7" data-to=".93"><p class="k" data-t="k3"></p><h2><b>4.9</b></h2><p class="sub" data-t="s3"></p></div>
+      <div class="progress" id="prog"><i></i></div>
+    </div>
+  </section>
+
+  <section class="roll" id="roll" aria-labelledby="pricesH">
+    <div class="roll-view">
+      <div class="roll-list" id="rollList">
+        <div class="roll-head"><p class="k" data-t="rk"></p><h2 id="pricesH" data-t="rh"></h2></div>
+        <div id="rows"></div>
+        <div class="finale" id="fin">
+          <h3 data-h="fin"></h3>
+          <div class="btns">
+            <a class="btn btn-a" href="tel:+37493976610"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-phone"/></svg><span data-t="book"></span></a>
+            <a class="btn btn-g" href="https://wa.me/37493976610" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-chat"/></svg>WhatsApp</a>
+          </div>
+          <p class="note" data-t="note"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="info" aria-labelledby="infoH">
+    <div class="info-grid">
+      <div class="num" aria-hidden="true">23</div>
+      <div><h3 id="infoH" data-t="l_addr"></h3><p data-t="addr_full"></p><a class="map-link" href="https://www.google.com/maps/place/data=!4m2!3m1!1s0x406abdb148f56755:0x44d0d83ce96efd6e" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-pin"/></svg><span data-t="map"></span></a></div>
+      <div><h3 data-t="l_hours"></h3><p data-t="hours"></p></div>
+      <div><h3 data-t="l_phone"></h3><a class="v" href="tel:+37493976610">093 97 66 10</a></div>
+    </div>
+    <div class="foot"><span>© Barbershop 23 by Asatur</span><span data-t="city"></span></div>
+  </section>
+</main>
+
+<a class="fab" id="fab" href="tel:+37493976610" data-t-aria="book"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-phone"/></svg></a>
+<div class="demo" data-t="demo"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ic-phone" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></symbol>
+  <symbol id="ic-chat" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3zm0 16.2a7.2 7.2 0 0 1-3.7-1l-.3-.2-2.7.7.7-2.6-.2-.3A7.2 7.2 0 1 1 12 19.2zm4-5.4c-.2-.1-1.3-.6-1.5-.7s-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a5.9 5.9 0 0 1-2.9-2.5c-.2-.4.2-.4.6-1.2a.4.4 0 0 0 0-.4l-.7-1.6c-.2-.4-.4-.4-.5-.4h-.4a.8.8 0 0 0-.6.3 2.5 2.5 0 0 0-.8 1.9 4.4 4.4 0 0 0 .9 2.3 10 10 0 0 0 3.9 3.4c1.4.6 2 .7 2.7.6a2.3 2.3 0 0 0 1.5-1.1 1.9 1.9 0 0 0 .1-1.1c0-.1-.2-.2-.4-.3z"/></symbol>
+  <symbol id="ic-pin" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></symbol>
+</svg>
+
+<script>
+(function () {
+  "use strict";
+  /* ---------- texts ---------- */
+  var T = {
+    addr: { hy: "Թումանյան 23 · Երևան", ru: "Туманяна 23 · Ереван", en: "23 Tumanyan · Yerevan" },
+    scroll: { hy: "Ոլորեք", ru: "Листайте", en: "Scroll" },
+    k1: { hy: "Ներկայացնում է", ru: "Представляет", en: "Presents" },
+    k2: { hy: "Հասցե", ru: "Адрес", en: "Location" },
+    street: { hy: "Թումանյան <b>23</b>", ru: "Туманяна <b>23</b>", en: "<b>23</b> Tumanyan" },
+    s2: { hy: "Երևանի կենտրոնում։ Ամեն օր՝ 9:00–21:00։", ru: "Центр Еревана. Каждый день 9:00–21:00.", en: "Central Yerevan. Every day 9:00–21:00." },
+    k3: { hy: "Գնահատական", ru: "Оценка", en: "Rating" },
+    s3: { hy: "182 կարծիք Google-ում", ru: "182 отзыва в Google", en: "182 reviews on Google" },
+    rk: { hy: "Barbershop 23-ում", ru: "В Barbershop 23", en: "At Barbershop 23" },
+    rh: { hy: "Ծառայություններ և գներ", ru: "Услуги и цены", en: "Services and prices" },
+    fin: { hy: "Ձեր աթոռն <b>արդեն սպասում է</b>", ru: "Ваше кресло <b>уже ждёт</b>", en: "Your chair <b>is waiting</b>" },
+    book: { hy: "Գրանցվել", ru: "Записаться", en: "Book a chair" },
+    note: { hy: "Ճշգրիտ գինը կասենք զանգով", ru: "Точную цену подскажем по телефону", en: "Call us for the exact price" },
+    l_addr: { hy: "Հասցե", ru: "Адрес", en: "Address" }, l_hours: { hy: "Ժամեր", ru: "Часы", en: "Hours" }, l_phone: { hy: "Զանգ", ru: "Звонок", en: "Call" },
+    addr_full: { hy: "Թումանյան փ. 23, Երևան", ru: "ул. Туманяна, 23, Ереван", en: "23 Tumanyan St, Yerevan" },
+    map: { hy: "Բացել քարտեզում", ru: "Открыть в картах", en: "Open in Maps" },
+    hours: { hy: "Ամեն օր 9:00–21:00", ru: "Ежедневно 9:00–21:00", en: "Every day 9:00–21:00" },
+    city: { hy: "Երևան, Հայաստան", ru: "Ереван, Армения", en: "Yerevan, Armenia" },
+    demo: { hy: "Դեմո՝ Barbershop 23-ի համար · գները օրինակ են", ru: "Демо для Barbershop 23 · цены — пример", en: "Demo for Barbershop 23 · sample prices" }
+  };
+  var PRICES = [
+    { dept: { hy: "Սանրվածք", ru: "Стрижка", en: "Haircuts" }, items: [
+      [{ hy: "Տղամարդու սանրվածք", ru: "Мужская стрижка", en: "Men's haircut" }, 4000],
+      [{ hy: "Ֆեյդ", ru: "Фейд", en: "Skin fade" }, 4500],
+      [{ hy: "Մանկական սանրվածք", ru: "Детская стрижка", en: "Kids' haircut" }, 3000, { hy: "մինչև 12 տարեկան", ru: "до 12 лет", en: "up to 12" }],
+      [{ hy: "Հայր և որդի", ru: "Папа и сын", en: "Father & son" }, 6500]
+    ] },
+    { dept: { hy: "Մորուք", ru: "Борода", en: "Beard" }, items: [
+      [{ hy: "Մորուքի ձևավորում", ru: "Оформление бороды", en: "Beard shaping" }, 2500],
+      [{ hy: "Ածելիով սափրում", ru: "Бритьё опасной бритвой", en: "Straight-razor shave" }, 3500, { hy: "տաք սրբիչով", ru: "с горячим полотенцем", en: "with a hot towel" }],
+      [{ hy: "Մորուքի երանգավորում", ru: "Тонирование бороды", en: "Beard toning" }, 3000]
+    ] },
+    { dept: { hy: "Ամբողջական", ru: "Комплекс", en: "The full works" }, items: [
+      [{ hy: "Սանրվածք + մորուք", ru: "Стрижка + борода", en: "Haircut + beard" }, 6000]
+    ] }
+  ];
+  var lang = "hy";
+  function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, lang === "en" ? "," : " ") + " ֏"; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function setLang(l) {
+    lang = ["hy", "ru", "en"].indexOf(l) >= 0 ? l : "hy";
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-t]").forEach(function (e) { e.textContent = T[e.dataset.t][lang]; });
+    document.querySelectorAll("[data-h]").forEach(function (e) { e.innerHTML = T[e.dataset.h][lang]; });
+    document.querySelectorAll("[data-t-aria]").forEach(function (e) { e.setAttribute("aria-label", T[e.dataset.tAria][lang]); });
+    document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === lang)); });
+    document.getElementById("rows").innerHTML = PRICES.map(function (g) {
+      return '<p class="dept">' + esc(g.dept[lang]) + "</p>" + g.items.map(function (it) {
+        return '<div class="row"><div class="s">' + esc(it[0][lang]) + (it[2] ? "<small>" + esc(it[2][lang]) + "</small>" : "") + '</div><div class="p">' + fmt(it[1]) + "</div></div>";
+      }).join("");
+    }).join("");
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+    measureRoll(); tick();
+  }
+  document.querySelectorAll("[data-lang]").forEach(function (b) { b.addEventListener("click", function () { setLang(b.dataset.lang); }); });
+
+  /* ---------- elements ---------- */
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var film = document.getElementById("film"), cv = document.getElementById("cv"), ctx = cv.getContext("2d");
+  var svg = document.getElementById("veil"), t23 = document.getElementById("t23"), veilRect = document.getElementById("veilRect"), grain = document.getElementById("grain");
+  var intro = document.getElementById("intro"), shade = document.getElementById("shade"), prog = document.getElementById("prog"), top = document.getElementById("top"), fab = document.getElementById("fab");
+  var credits = [].slice.call(document.querySelectorAll(".credit"));
+  var roll = document.getElementById("roll"), rollList = document.getElementById("rollList"), fin = document.getElementById("fin");
+  function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+  /* ---------- frames ---------- */
+  var N = 95, dir = innerWidth < 761 ? "s" : "l", frames = [], cur = -1, want = 0;
+  function src(i) { return "frames/" + dir + "/f" + String(i + 1).padStart(3, "0") + ".webp"; }
+  function load(i) { if (frames[i]) return; var im = new Image(); im.decoding = "async"; im.onload = function () { if (i === want || cur < 0) draw(want, true); }; im.src = src(i); frames[i] = im; }
+  load(0); for (var j = 6; j < N; j += 6) load(j);
+  setTimeout(function () { for (var j = 0; j < N; j++) load(j); }, 400);
+  function ok(im) { return im && im.complete && im.naturalWidth; }
+  function draw(i, force) {
+    if (i === cur && !force) return;
+    var im = ok(frames[i]) ? frames[i] : null;
+    for (var k = 1; !im && k < N; k++) im = ok(frames[i - k]) ? frames[i - k] : ok(frames[i + k]) ? frames[i + k] : null;
+    if (!im) return; cur = i;
+    var cw = cv.width, ch = cv.height, s = Math.max(cw / im.naturalWidth, ch / im.naturalHeight), w = im.naturalWidth * s, h = im.naturalHeight * s;
+    ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
+  }
+
+  /* ---------- the "23" veil ---------- */
+  var W, H, ox, oy;
+  function layout() {
+    W = innerWidth; H = innerHeight;
+    var d = Math.min(devicePixelRatio || 1, 2); cv.width = W * d; cv.height = H * d; cur = -1;
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    var fs = Math.min(W * 1.02, H * 0.92), base = H / 2 + fs * 0.36;
+    t23.setAttribute("font-size", fs); t23.setAttribute("x", W / 2); t23.setAttribute("y", base);
+    // zoom origin = deepest point inside the digits (distance transform on a small canvas)
+    var k = 4, cw = Math.ceil(W / k), chh = Math.ceil(H / k), c = document.createElement("canvas"); c.width = cw; c.height = chh;
+    var g = c.getContext("2d"); g.font = "900 " + fs / k + 'px "Sofia Sans Extra Condensed"'; g.textAlign = "center"; g.fillText("23", W / 2 / k, base / k);
+    var a = g.getImageData(0, 0, cw, chh).data, dd = new Float32Array(cw * chh), i, x, y, best = -1; ox = W / 2; oy = H / 2;
+    for (i = 0; i < cw * chh; i++) dd[i] = a[i * 4 + 3] > 127 ? 1e9 : 0;
+    for (y = 0; y < chh; y++) for (x = 0; x < cw; x++) { i = y * cw + x; if (!dd[i]) continue; var m = dd[i];
+      if (x) m = Math.min(m, dd[i - 1] + 1); if (y) m = Math.min(m, dd[i - cw] + 1); if (x && y) m = Math.min(m, dd[i - cw - 1] + 1.41); if (y && x < cw - 1) m = Math.min(m, dd[i - cw + 1] + 1.41); dd[i] = m; }
+    for (y = chh - 1; y >= 0; y--) for (x = cw - 1; x >= 0; x--) { i = y * cw + x; if (!dd[i]) continue; var m2 = dd[i];
+      if (x < cw - 1) m2 = Math.min(m2, dd[i + 1] + 1); if (y < chh - 1) m2 = Math.min(m2, dd[i + cw] + 1); if (x < cw - 1 && y < chh - 1) m2 = Math.min(m2, dd[i + cw + 1] + 1.41); if (x && y < chh - 1) m2 = Math.min(m2, dd[i + cw - 1] + 1.41); dd[i] = m2;
+      if (m2 > best) { best = m2; ox = x * k + k / 2; oy = y * k + k / 2; } }
+    measureRoll(); tick(); draw(want, true);
+  }
+
+  /* ---------- end-credit price roll ---------- */
+  var rollStart = 0, rollDist = 0;
+  function measureRoll() {
+    var vh = innerHeight, finMid = fin.offsetTop + fin.offsetHeight / 2;
+    rollStart = vh * 0.82;                       // list starts just below the fold
+    var end = vh / 2 - finMid;                   // ...and stops with the final card centred
+    rollDist = Math.max(0, rollStart - end);
+    roll.style.height = (rollDist * 1.15 + vh) + "px";
+  }
+
+  /* ---------- scroll ---------- */
+  var idle = 0, idleT = 0, ticking = false;
+  function tick() {
+    ticking = false;
+    if (ox === undefined) return;
+    var vh = innerHeight, total = film.offsetHeight - vh, p = clamp(-film.getBoundingClientRect().top / total);
+    if (reduce) p = p > .01 ? Math.max(p, .5) : 0;
+    // fly through the 23
+    var z = clamp(p / .2), s = 1 + Math.pow(z, 2.2) * 14;
+    t23.setAttribute("transform", "translate(" + ox + " " + oy + ") scale(" + s + ") translate(" + -ox + " " + -oy + ")");
+    var gone = clamp((z - .55) / .4);
+    veilRect.style.opacity = 1 - gone; grain.style.opacity = .1 * (1 - gone);
+    intro.style.opacity = 1 - clamp(p / .04);
+    top.classList.toggle("on-stone", gone < .5);
+    top.classList.toggle("solid", film.getBoundingClientRect().bottom < vh * .5);
+    shade.style.opacity = clamp((p - .16) / .08);
+    prog.style.opacity = clamp((p - .2) / .05); prog.firstChild.style.transform = "scaleX(" + clamp((p - .2) / .75) + ")";
+    // footage follows the scroll; at the very top it idles so the 23 feels alive
+    want = p < .012 ? idle : Math.min(N - 1, Math.round(clamp(p / .95) * (N - 1)));
+    draw(want);
+    credits.forEach(function (c) {
+      var a = +c.dataset.from, b = +c.dataset.to, o = Math.min(clamp((p - a) / .05), 1 - clamp((p - (b - .05)) / .05));
+      c.style.opacity = o; c.style.filter = o < 1 ? "blur(" + (1 - o) * 12 + "px)" : "none"; c.style.letterSpacing = (1 - o) * .08 + "em";
+    });
+    // price roll
+    var rr = roll.getBoundingClientRect(), q = clamp(-rr.top / Math.max(1, roll.offsetHeight - vh) * 1.15);
+    rollList.style.transform = "translateY(" + (rollStart - q * rollDist) + "px)";
+    fab.classList.toggle("show", p > .22 && rr.top > -roll.offsetHeight + vh * 1.2);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(tick); } }
+  addEventListener("scroll", onScroll, { passive: true });
+  addEventListener("resize", layout);
+  if (!reduce) setInterval(function () { if (window.scrollY < 20) { idle = (idle + 1) % 36; if (want !== idle) { want = idle; draw(idle); } } }, 1000 / 12);
+
+  var initial = null;
+  try { initial = new URLSearchParams(location.search).get("lang") || localStorage.getItem("lang"); } catch (e) {}
+  setLang(initial || "hy");
+  layout();
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () { layout(); });
+})();
+</script>
+</body>
+</html>
